@@ -1,0 +1,51 @@
+This code is working for mass regression with anti particle and signal sample
+At least two gen and two reco tau matched to jet.
+Matched jet more than 1
+
+"h_jet_E"           ----> Jet energy
+"h_jet_pT"          ----> Jet pt
+"h_jet_eta"         ----> Jet eta
+"h_jet_nJet"        ----> Number of matched jets
+"h_jet_m0"          ----> Jet mass
+"h_tau_mr_jet_ma"   ----> A mass
+"h_a_m_pT"          ----> A mass, pt
+"h_jet_pta"         ----> A pt
+"h_jet_etaa"        ----> A eta
+"h_jet_phia"        ----> A phi
+"h_jet_isDiTau"     ----> Bool filled by checking gen level information only
+"h_jet_dR"          ----> A and jet dR
+"h_jet_TaudR"       ----> gen Tau dR
+"h_jet_Tau1dR"      ----> jet and gen Tau1 dR
+"h_jet_Tau2dR"      ----> jet and gen Tau2 dR
+"h_jet_Tau1pT"      ----> gen Tau1 pt
+"h_jet_Tau2pT"      ----> gen Tau2 pt
+"h_jet_NGenTaus"    ----> Number of gen Tau matched to jet with in dR 0.4
+"h_jet_NrecoTaus"   ----> Number matched reco Tau in Jet with in dR 0.4
+"h_jet_recoTau1dR"  ----> reco Tau1 and jet dR (nearest to jet)
+"h_jet_recoTau2dR"  ----> reco Tau2 and jet dR
+"h_jet_n1dR"        ----> gen Tau1's (pdgid=16, Tau neutrino) Daughter and jet dR
+"h_jet_n2dR"        ----> gen Tau2's (pdgid=16, Tau neutrino) Daughter and jet dR
+
+
+
+tree->Branch("jetM")          -----> jet mass
+tree->Branch("jetPt")         -----> jet pt
+tree->Branch("jetPdgIds")     -----> A pdgId
+tree->Branch("jetadR")        -----> A and jet dR
+tree->Branch("jetIsDiTau")    -----> Bool filled by checking gen level information only
+tree->Branch("a_m")           -----> A mass
+tree->Branch("a_pt")          -----> A pt
+tree->Branch("a_eta")         -----> A eta
+tree->Branch("a_phi")         -----> A phi
+tree->Branch("jetpT")         -----> jet pt
+tree->Branch("TaudR")         -----> gen Tau dR
+tree->Branch("Tau1dR")        -----> gen Tau1 and jet dR
+tree->Branch("Tau2dR")        -----> gen Tau2 and jet dR
+tree->Branch("Tau1pT")        -----> gen Tau1 pt
+tree->Branch("Tau2pT")        -----> gen Tau2 pt
+tree->Branch("NGenTaus")      -----> Number of gen Tau matched to jet within dR 0.4
+tree->Branch("NrecoTaus")     -----> Number of reco Tau matched to jet within dR 0.4
+tree->Branch("recoTau1dR")    -----> reco Tau1 and jet dR (nearest to jet)
+tree->Branch("recoTau2dR")    -----> reco Tau2 and jet dR
+tree->Branch("n1dR")          -----> gen Tau1's (pdgid=16, Tau neutrino) Daughter and jet dR
+tree->Branch("n2dR")          -----> gen Tau2's (pdgid=16, Tau neutrino) Daughter and jet dR
