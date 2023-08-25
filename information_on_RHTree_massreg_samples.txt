@@ -29,7 +29,7 @@ Matched jet more than 1
 
 
 tree->Branch("jetM")          -----> jet mass
-tree->Branch("jetE")         -----> jet energy
+#tree->Branch("jetE")         -----> jet energy # not in tree
 tree->Branch("jetPdgIds")     -----> A pdgId
 tree->Branch("jetadR")        -----> A and jet dR
 tree->Branch("jetIsDiTau")    -----> Bool filled by checking gen level information only
