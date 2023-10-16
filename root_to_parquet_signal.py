@@ -11,11 +11,33 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pickle
 
+import argparse
+parser = argparse.ArgumentParser(description='Process dataset 0-9')
+parser.add_argument('-m', '--mass',     default='',    type=str, help='mass of signal -> 3p7,4,5,6,8,10,12,14')
+args = parser.parse_args()
+Mass = args.mass
 
-decay = "IMG_Upsilon_ToTauTau_Hadronic_tauDR0p4_m3p6To14_dataset_validation_v2"
-local="/eos/uscms/store/group/lpcml/bbbam/Upsilon1s_ToTauTau_Hadronic_tauDR0p4_eta0To2p4_pythia8_validationML_dataset_1/Upsilon1s_ToTauTau_Hadronic_tauDR0p4_validation_v2_dataset_1/230826_063719/0000"
-out_dir="/eos/uscms/store/user/bbbam/IMG_v2/%s"%decay
-out_dir_plots = "plots_from_pq_unbiased_data_pkl/%s"%decay
+decay = "IMG_H_AATo4Tau_Hadronic_tauDR0p4_M%s_signal_v2"%Mass
+
+if Mass == '3p7':
+    local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/signal/gen_HToAATo4Tau_Hadronic_tauDR0p4_M3p7_ctau0To3_eta0To2p4_pythia8_2018UL_lessPerFile/HtoAATo4Tau_Hadronic_tauDR0p4_M3p7_eta0To2p4_pythia8_signal_v2/231011_150555/000*"
+if Mass == '4':
+    local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/signal/gen_HToAATo4Tau_Hadronic_tauDR0p4_M4_ctau0To3_eta0To2p4_pythia8_2018UL_lessPerFile/HtoAATo4Tau_Hadronic_tauDR0p4_M4_eta0To2p4_pythia8_signal_v2/231011_150649/000*"
+if Mass == '5':
+    local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/signal/gen_HToAATo4Tau_Hadronic_tauDR0p4_M5_ctau0To3_eta0To2p4_pythia8_2018UL_lessPerFile/HtoAATo4Tau_Hadronic_tauDR0p4_M5_eta0To2p4_pythia8_signal_v2/231013_053000/000*"
+if Mass == '6':
+    local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/signal/gen_HToAATo4Tau_Hadronic_tauDR0p4_M6_ctau0To3_eta0To2p4_pythia8_2018UL_lessPerFile/HtoAATo4Tau_Hadronic_tauDR0p4_M6_eta0To2p4_pythia8_signal_v2/231013_053150/000*"
+if Mass == '8':
+    local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/signal/gen_HToAATo4Tau_Hadronic_tauDR0p4_M8_ctau0To3_eta0To2p4_pythia8_2018UL_lessPerFile/HtoAATo4Tau_Hadronic_tauDR0p4_M8_eta0To2p4_pythia8_signal_v2/231013_053342/000*"
+if Mass == '10':
+    local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/signal/gen_HToAATo4Tau_Hadronic_tauDR0p4_M10_ctau0To3_eta0To2p4_pythia8_2018UL/HtoAATo4Tau_Hadronic_tauDR0p4_M10_eta0To2p4_pythia8_signal_v2/230830_050506/0000"
+if Mass == '12':
+    local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/signal/gen_HToAATo4Tau_Hadronic_tauDR0p4_M12_ctau0To3_eta0To2p4_pythia8_2018UL/HtoAATo4Tau_Hadronic_tauDR0p4_M12_eta0To2p4_pythia8_signal_v2/231013_053447/0000"
+if Mass == '14':
+    local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/signal/gen_HToAATo4Tau_Hadronic_tauDR0p4_M14_ctau0To3_eta0To2p4_pythia8_2018UL/HtoAATo4Tau_Hadronic_tauDR0p4_M14_eta0To2p4_pythia8_signal_v2/231013_053602/0000"
+
+out_dir="/eos/uscms/store/user/bbbam/IMG_v2/signal"
+out_dir_plots = "plot_signal_M%s_image_data_pkl"%Mass
 
 def upsample_array(x, b0, b1):
 
@@ -188,7 +210,7 @@ output_dict["a_pt"] = a_pt_
 output_dict["jet_mass"] = jet_mass_
 output_dict["jet_pt"] = jet_pt_
 
-with open("%s/data_for_validation_upsilonToTauTau_hadronic_dR0p4_a_jet_mass_pt.pkl"%out_dir_plots, "wb") as outfile:
+with open("%s/data_for_validation_H_AATo4Tau_hadronic_dR0p4_M%s_a_jet_mass_pt.pkl"%(out_dir_plots, Mass), "wb") as outfile:
     pickle.dump(output_dict, outfile, protocol=2) #protocol=2 for compatibility
 
 print(" >> nJets:",nJets)

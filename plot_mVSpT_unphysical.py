@@ -21,9 +21,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', '-n', type=int, default=0, help='dataset number[0-9]')
 args = parser.parse_args()
 dataset = args.dataset
-subset = ['0000','0001','0002','0003','0004','0005','0006','0007','0008','0009']
+# subset = ['0000','0001','0002','0003','0004','0005','0006','0007','0008','0009']
 # out_dir = 'plots_A_2Tau_m3p6To14p8_v2_dataset_2_unbiasing_status/%s/'%subset[dataset]
-out_dir = 'plots_A_2Tau_m14p8To17p2_v2_dataset_2_unbiasing_status/%s/'%subset[dataset]
+out_dir = 'plots_A_2Tau_m128To3p4_unbiasing_status'
 if not os.path.isdir(out_dir):
             os.makedirs(out_dir)
 
@@ -82,8 +82,8 @@ histos={}
 
 # local='/eos/uscms/store/group/lpcml/bbbam/aToTauTau_Hadronic_tauDR0p4_m3p6To16_pT30To180_ctau0To3_eta0To1p4_pythia8_unbiased4ML_dataset_1/aToTauTau_Hadronic_tauDR0p4_m3p6To14p8_dataset_1_v2/230825_060154/'
 # local='/eos/uscms/store/group/lpcml/bbbam/aToTauTau_Hadronic_tauDR0p4_m3p6To16_pT30To180_ctau0To3_eta0To1p4_pythia8_unbiased4ML_dataset_2/aToTauTau_Hadronic_tauDR0p4_m3p6To14p8_dataset_2_v2/230825_055652/'
-local='/eos/uscms/store/group/lpcml/bbbam/aToTauTau_Hadronic_tauDR0p4_m14To17p2_pT30To180_ctau0To3_eta0To2p4_pythia8_dataset_2/aToTauTau_Hadronic_tauDR0p4_m14p8To17p2_eta0To2p4_pythia8_unbiased4ML_v2_dataset_2/230826_063114/'
-rhFileList = '%s/%s/output*.root'%(local,subset[dataset])
+local='/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/aToTauTau_Hadronic_tauDR0p4_m1p2To3p6_pythia8_DIGI_RECO_unphysical/aToTauTau_Hadronic_tauDR0p4_m1p2To3p6_unphysical/231005_230625/0000/'
+rhFileList = '%s/output*.root'%local
 # print " >> Input file list: %s"%rhFileList
 rhFileList = glob.glob(rhFileList)
 assert len(rhFileList) > 0

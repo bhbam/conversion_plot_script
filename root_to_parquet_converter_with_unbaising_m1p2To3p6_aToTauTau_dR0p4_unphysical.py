@@ -18,19 +18,21 @@ parser.add_argument('-n', '--dataset',     default=0,    type=int, help='number 
 args = parser.parse_args()
 n = args.dataset
 
-subsets= ['0000','0001','0002','0003','0004','0005','0006','0007','0008','0009']
-event_per_bins =[648,634,645,576,615,627,611,636,610,600] # number of events you want to mass pt bins for dataset m3p6To14_dataset_2.
+subsets= ['0000','0001','0002','0003','0004','0005','0006','0007','0008','0009','0010']
+# event_per_bins =[648,634,645,576,615,627,611,636,610,600] # number of events you want to mass pt bins for dataset m3p6To14_dataset_2.
 # event_per_bins =[311,301,309,320,322,298,331,308,302] # number of events you want to mass pt bins for dataset m14To17p2_dataset_2. Dont want use this
+event_per_bins =[512,500,511,500,500,511,522,500,500,514] # number of events you want to mass pt bins for dataset m3p6To14_dataset_2.
 
 subset = subsets[n]
 event_per_bin = event_per_bins[n]
 print("processing dataset --->  ", subset)
 print("Number of evebt expected in each mass and pT bins %d"%event_per_bin)
-decay = "IMG_aToTauTau_Hadronic_tauDR0p4_m3p6To14_dataset_2_unbaised"
-local="/eos/uscms/store/group/lpcml/bbbam/Ntuples/aToTauTau_Hadronic_tauDR0p4_m3p6To16_pT30To180_ctau0To3_eta0To1p4_pythia8_unbiased4ML_dataset_2/aToTauTau_Hadronic_tauDR0p4_m3p6To14_dataset_2_unbaied_as_previous_dataset/230506_061638/%s"%subset
-# local="/eos/uscms/store/group/lpcml/bbbam/Ntuples/aToTauTau_Hadronic_tauDR0p4_m14To17p2_pT30To180_ctau0To3_eta0To2p4_pythia8_dataset_2/aToTauTau_Hadronic_tauDR0p4_m14To17p2_eta0To1p2_pythia8_unbiased4ML_dataset_2/230615_072836/%s"%subset
-out_dir="/eos/uscms/store/group/lpcml/bbbam/IMG/%s"%decay
-out_dir_plots = "plots_from_pq_unbiased/%s/%s"%(decay, subset)
+decay = "IMG_aToTauTau_Hadronic_tauDR0p4_m1p2To3p6_dataset_2_unbaised_unphysical"
+# local='/eos/uscms/store/group/lpcml/bbbam/aToTauTau_Hadronic_tauDR0p4_m3p6To16_pT30To180_ctau0To3_eta0To1p4_pythia8_unbiased4ML_dataset_1/aToTauTau_Hadronic_tauDR0p4_m3p6To14p8_dataset_1_v2/230825_060154/%s'%subset
+# local='/eos/uscms/store/group/lpcml/bbbam/aToTauTau_Hadronic_tauDR0p4_m3p6To16_pT30To180_ctau0To3_eta0To1p4_pythia8_unbiased4ML_dataset_2/aToTauTau_Hadronic_tauDR0p4_m3p6To14p8_dataset_2_v2/230825_055652/%s'%subset
+local='/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/aToTauTau_Hadronic_tauDR0p4_m1p2To3p6_pythia8_DIGI_RECO_unphysical/aToTauTau_Hadronic_tauDR0p4_m1p2To3p6_unphysical/231005_230625/%s'%subset
+out_dir="/eos/uscms/store/user/bbbam/IMG_v2/%s"%decay
+out_dir_plots = "plots_from_root_to_pq_unbiased_m1p2To3p6_unphysical_v2/%s"%subset
 
 def upsample_array(x, b0, b1):
 
@@ -81,7 +83,7 @@ def crop_jet(imgECAL, iphi, ieta, jet_shape=125):
 
     return img_crop
 
-mass_bins =np.arange(3.6, 14.4, .4)
+mass_bins =np.arange(1.2, 4, .4)
 pt_bins = np.arange(30,185,5)
 
 hist_biased, xedges, yedges = np.histogram2d([], [], bins=[mass_bins, pt_bins])
@@ -97,7 +99,7 @@ rhFileList = '%s/output*.root'%(local)
 rhFileList = glob.glob(rhFileList)
 assert len(rhFileList) > 0
 total_files = len(rhFileList)
-print " >> %d files found"%total_files
+print(" >> %d files found"%total_files)
 
 
 rhTree = ROOT.TChain("fevt/RHTree")
@@ -115,14 +117,14 @@ print(" >> Output file:",outStr)
 
 
 iEvtStart = 0
-# iEvtEnd   = 1001
+# iEvtEnd   = 100
 iEvtEnd   = nEvts
 assert iEvtEnd <= nEvts
 print(" >> Processing entries: [",iEvtStart,"->",iEvtEnd,")")
 
 nJets = 0
 data = {} # Arrays to be written to parquet should be saved to data dict
-m_original_, pt_original_, m_unbaised_, pt_unbaised_ = [], [], [], []
+m_original_, pt_original_, m_unbaised_, pt_unbaised_,jet_mass_ = [], [], [], [], []
 
 
 sw = ROOT.TStopwatch()
@@ -132,7 +134,7 @@ for iEvt in range(iEvtStart,iEvtEnd):
     # Initialize event
     rhTree.GetEntry(iEvt)
 
-    if iEvt % 1000 == 0:
+    if iEvt % 10000 == 0:
         print(" .. Processing entry",iEvt)
     ams    = rhTree.a_m
     apts   = rhTree.a_pt
@@ -180,7 +182,7 @@ for iEvt in range(iEvtStart,iEvtEnd):
     # apts   = rhTree.a_pt
     #dRs    = rhTree.jetadR
     #pts    = rhTree.jetPt
-    #m0s    = rhTree.jetM
+    m0s    = rhTree.jetM
     iphis  = rhTree.jetSeed_iphi
     ietas  = rhTree.jetSeed_ieta
     #pdgIds = rhTree.jetPdgIds
@@ -206,10 +208,11 @@ for iEvt in range(iEvtStart,iEvtEnd):
         data['y']     = ys[i]
         #data['dR']    = dRs[i]
         #data['pt']    = pts[i]
-        #data['m0']    = m0s[i]
+        data['m0']    = m0s[i]
         data['iphi']  = iphis[i]
         data['ieta']  = ietas[i]
         #data['pdgId'] = pdgIds[i]
+        jet_mass_.append(m0s[i])
         data['X_jet'] = crop_jet(X_CMSII, data['iphi'], data['ieta']) # (7, 125, 125)
 
         # Create pyarrow.Table
@@ -235,13 +238,15 @@ output_dict = {}
 output_dict["m_original"] = m_original_
 output_dict["pt_original"] = pt_original_
 output_dict["m_unbaised"] = m_unbaised_
-output_dict["m_unbaised"] = m_unbaised_
+output_dict["pt_unbaised"] = pt_unbaised_
+output_dict["jet_mass"] = jet_mass_
+
 
 with open("%s/data_for_unbaising_plots_dataset_aToTauTau_hadronic_dR0p4_m14To17p2_%s.pkl"%(out_dir_plots, subset), "wb") as outfile:
     pickle.dump(output_dict, outfile, protocol=2) #protocol=2 for compatibility
 
 plt.imshow(hist_biased.T, origin='lower', extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]], aspect='auto', cmap='bwr')
-plt.xticks(np.arange(3.6, 14.4, .4),size=4)
+plt.xticks(np.arange(1.2, 4, .4),size=4)
 plt.yticks(np.arange(30,185,5),size=5)
 plt.title("Mass and  pT distribution original")
 plt.xlabel(r'$\mathrm{mass}$ [GeV]', size=10)
@@ -252,7 +257,7 @@ plt.savefig("%s/mass_VS_pt_original.png"%out_dir_plots, dpi=300, facecolor='w')
 plt.close()
 
 plt.imshow(hist_unbiased.T, origin='lower', extent=[xedges[0], xedges[-1], yedges[0], yedges[-1]], aspect='auto', cmap='bwr')
-plt.xticks(np.arange(3.6, 14.4, .4),size=4)
+plt.xticks(np.arange(1.2, 4, .4),size=4)
 plt.yticks(np.arange(30,185,5),size=5)
 plt.title("Mass and pT distribution unbiased")
 plt.xlabel(r'$\mathrm{mass}$ [GeV]', size=10)
@@ -263,7 +268,7 @@ plt.savefig("%s/mass_VS_pt_unbiased.png"%out_dir_plots, dpi=300, facecolor='w')
 plt.close()
 
 plt.bar(m_edges[:-1], hist_biased_m, width=np.diff(m_edges), align='edge')
-plt.xticks(np.arange(3.6, 14.4, .4),size=4)
+plt.xticks(np.arange(1.2, 4, .4),size=4)
 plt.title("Mass distribution original")
 plt.xlabel(r'$\mathrm{mass}$ [GeV]', size=10)
 plt.ylabel("Events/ 0.4 GeV", size=10)
@@ -271,7 +276,7 @@ plt.savefig("%s/mass_distribution_original.png"%out_dir_plots, dpi=300, facecolo
 plt.close()
 
 plt.bar(m_edges[:-1], hist_unbiased_m, width=np.diff(m_edges), align='edge')
-plt.xticks(np.arange(3.6, 14.4, .4),size=4)
+plt.xticks(np.arange(1.2, 4, .4),size=4)
 plt.title("Mass distribution unbiased")
 plt.xlabel(r'$\mathrm{mass}$ [GeV]', size=10)
 plt.ylabel("Events/ 0.4 GeV", size=10)
@@ -299,13 +304,13 @@ print(" >> Real time:",sw.RealTime()/60.,"minutes")
 print(" >> CPU time: ",sw.CpuTime() /60.,"minutes")
 print("========================================================")
 
-# Verify output file
-pqIn = pq.ParquetFile(outStr)
-print(pqIn.metadata)
-print(pqIn.schema)
-X = pqIn.read_row_group(0, columns=['y','am','iphi','ieta']).to_pydict()
-#X = pqIn.read_row_group(0, columns=['y','am','dR','pt','m0','iphi','ieta','pdgId']).to_pydict()
-print(X)
-#X = pqIn.read_row_group(0, columns=['X_jet.list.item.list.item.list.item']).to_pydict()['X_jet'] # read row-by-row
-#X = pqIn.read(['X_jet.list.item.list.item.list.item', 'y']).to_pydict()['X_jet'] # read entire column(s)
-#X = np.float32(X)
+# # Verify output file
+# pqIn = pq.ParquetFile(outStr)
+# print(pqIn.metadata)
+# print(pqIn.schema)
+# X = pqIn.read_row_group(0, columns=['y','am','iphi','ieta']).to_pydict()
+# #X = pqIn.read_row_group(0, columns=['y','am','dR','pt','m0','iphi','ieta','pdgId']).to_pydict()
+# print(X)
+# #X = pqIn.read_row_group(0, columns=['X_jet.list.item.list.item.list.item']).to_pydict()['X_jet'] # read row-by-row
+# #X = pqIn.read(['X_jet.list.item.list.item.list.item', 'y']).to_pydict()['X_jet'] # read entire column(s)
+# #X = np.float32(X)
