@@ -14,10 +14,12 @@ import pickle
 import argparse
 parser = argparse.ArgumentParser(description='Process dataset 0-9')
 parser.add_argument('-m', '--mass',     default='',    type=str, help='mass of signal -> 3p7,4,5,6,8,10,12,14')
+parser.add_argument('-p', '--part',     default='0',     type=str, help='0 for single parquet, 1 and 2 to make two parquet')
 args = parser.parse_args()
 Mass = args.mass
+part = args.part
 
-decay = "IMG_H_AATo4Tau_Hadronic_tauDR0p4_M%s_signal_v2"%Mass
+decay = "IMG_H_AATo4Tau_Hadronic_tauDR0p4_M%s_signal_v2_%s"%(Mass,part)
 
 if Mass == '3p7':
     local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/signal/gen_HToAATo4Tau_Hadronic_tauDR0p4_M3p7_ctau0To3_eta0To2p4_pythia8_2018UL_lessPerFile/HtoAATo4Tau_Hadronic_tauDR0p4_M3p7_eta0To2p4_pythia8_signal_v2/231011_150555/000*"
@@ -112,10 +114,16 @@ if not os.path.isdir(out_dir):
 outStr ='%s/%s.parquet'%(out_dir, decay)
 print(" >> Output file:",outStr)
 
+if part == '1':
+    iEvtStart = 0
+    iEvtEnd = nEvts//2
+elif part == '2':
+    iEvtStart   = nEvts//2
+    iEvtEnd   = nEvts
+else:
+    iEvtStart = 0
+    iEvtEnd = nEvts
 
-iEvtStart = 0
-# iEvtEnd   = 1001
-iEvtEnd   = nEvts
 assert iEvtEnd <= nEvts
 print(" >> Processing entries: [",iEvtStart,"->",iEvtEnd,")")
 
@@ -210,7 +218,7 @@ output_dict["a_pt"] = a_pt_
 output_dict["jet_mass"] = jet_mass_
 output_dict["jet_pt"] = jet_pt_
 
-with open("%s/data_for_validation_H_AATo4Tau_hadronic_dR0p4_M%s_a_jet_mass_pt.pkl"%(out_dir_plots, Mass), "wb") as outfile:
+with open("%s/data_for_validation_H_AATo4Tau_hadronic_dR0p4_M%s_a_jet_mass_pt_%s.pkl"%(out_dir_plots, Mass,part), "wb") as outfile:
     pickle.dump(output_dict, outfile, protocol=2) #protocol=2 for compatibility
 
 print(" >> nJets:",nJets)
