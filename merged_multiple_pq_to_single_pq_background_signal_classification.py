@@ -113,7 +113,8 @@ nevts_in = len(dset)
 # Shuffle
 print('>> Input events:',nevts_in)
 assert nevts_in > 0
-idxs = np.random.permutation(nevts_in)
+# idxs = np.random.permutation(nevts_in)
+idxs = np.arange(nevts_in)
 
 start, stop = 0, 425000
 if not os.path.isdir(outDir):
