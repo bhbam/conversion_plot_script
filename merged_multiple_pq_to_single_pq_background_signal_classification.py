@@ -59,9 +59,15 @@ def merge_samples(dset, start, stop, idxs, decay):
             data['apt']   = float(np.squeeze(t["apt"]))
             data['y']     = 1.
 
+
+
         else:
-            data['am']    = float(np.squeeze(t["jetM"]))
-            data['apt']   = float(np.squeeze(t["jetPt"]))
+            # data['am']    = float(np.squeeze(t["jetM"]))
+            # data['apt']   = float(np.squeeze(t["jetPt"]))
+            # data['y']     = 0.
+            #only for GGH_TauTau dataset
+            data['am']    = float(np.squeeze(t["am"]))
+            data['apt']   = float(np.squeeze(t["apt"]))
             data['y']     = 0.
 
         pqdata = [pa.array([d]) if (np.isscalar(d) or type(d) == list) else pa.array([d.tolist()]) for d in data.values()]
@@ -74,12 +80,12 @@ def merge_samples(dset, start, stop, idxs, decay):
     writer.close()
     print('>> E.T.: %f min'%((time.time()-now)/60.))
 
-# subfile_name = 'DYToTauTau_M-50_13TeV'
-# subfile_name = 'QCD_Pt-15to7000'
-# subfile_name = 'TTToHadronic'
-subfile_name = 'WJetsToLNu'
-# subfile_name = 'A_TauTau_boosted'
-decay='backgrounds' # name inse IMG directory
+# subfile_name = 'DYToTauTau_M-50_13TeV_valid'
+# subfile_name = 'QCD_Pt-15to7000_valid'
+# subfile_name = 'TTToHadronic_valid'
+# subfile_name = 'WJetsToLNu_valid'
+subfile_name = 'GGH_TauTau_valid'
+decay='background' # name inse IMG directory
 # decay='signals' # name inse IMG directory
 
 # decay='Upsilon1s_ToTauTau_Hadronic_tauDR0p4_validation_no_pix_layers' # name inse IMG directory
@@ -92,15 +98,13 @@ if(cluster=='FNAL'):
     # local='/storage/local/data1/gpuscratch/bbbam/ParquetFiles_correctTrackerLayerHits_SecVtxInfoAdded/DYToTauTau_M-50_13TeV-powheg_pythia8/AODJets'
     # local='/storage/local/data1/gpuscratch/bbbam/ParquetFiles_correctTrackerLayerHits_SecVtxInfoAdded/QCD_Pt-15to7000_TuneCP5_Flat_13TeV_pythia8/AODJets'
     # local='/storage/local/data1/gpuscratch/bbbam/ParquetFiles_correctTrackerLayerHits_SecVtxInfoAdded/TTToHadronic_TuneCP5_13TeV_powheg-pythia8/AODJets'
-    local='/storage/local/data1/gpuscratch/bbbam/ParquetFiles_correctTrackerLayerHits_SecVtxInfoAdded/WJetsToLNu_TuneCP5_13TeV_madgraphMLM-pythia8/AODJets'
+    # local='/storage/local/data1/gpuscratch/bbbam/ParquetFiles_correctTrackerLayerHits_SecVtxInfoAdded/WJetsToLNu_TuneCP5_13TeV_madgraphMLM-pythia8/AODJets'
+    local='/storage/local/data1/gpuscratch/bbbam/classification/valid'
 
-    # local='/eos/uscms/store/user/bbbam/IMG_v2/IMG_aToTauTau_Hadronic_tauDR0p4_m3p6To14p8_dataset_2_unbaised_v2'
-
-    # outDir='/eos/uscms/store/group/lpcml/bbbam/IMG/%s'%(decay)
-    outDir='/eos/uscms/store/user/bhbam/IMG_classification/%s'%(decay)
+    outDir='/eos/uscms/store/user/bhbam/IMG_v2/%s'%(decay)
 
 
-files_ = '/%s/*.parquet*'%local
+files_ = '/%s/GGH*.parquet*'%local
 fs = glob.glob(files_)
 
 assert len(fs) > 0
@@ -116,7 +120,9 @@ assert nevts_in > 0
 # idxs = np.random.permutation(nevts_in)
 idxs = np.arange(nevts_in)
 
-start, stop = 0, 425000
+# start, stop = 0, 425000
+# start, stop = 425001, 425001+85000
+start, stop = 0, nevts_in
 if not os.path.isdir(outDir):
         os.makedirs(outDir)
 filename = '%s/%s'%(outDir,subfile_name)
