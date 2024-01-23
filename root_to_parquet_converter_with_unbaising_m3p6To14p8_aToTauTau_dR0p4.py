@@ -29,9 +29,9 @@ print("processing dataset --->  ", subset)
 print("Number of evebt expected in each mass and pT bins %d"%event_per_bin)
 decay = "IMG_aToTauTau_Hadronic_tauDR0p4_m3p6To14p8_dataset_2_unbaised_v2"
 # local='/eos/uscms/store/group/lpcml/bbbam/aToTauTau_Hadronic_tauDR0p4_m3p6To16_pT30To180_ctau0To3_eta0To1p4_pythia8_unbiased4ML_dataset_1/aToTauTau_Hadronic_tauDR0p4_m3p6To14p8_dataset_1_v2/230825_060154/%s'%subset
-local='/eos/uscms/store/group/lpcml/bbbam/aToTauTau_Hadronic_tauDR0p4_m3p6To16_pT30To180_ctau0To3_eta0To1p4_pythia8_unbiased4ML_dataset_2/aToTauTau_Hadronic_tauDR0p4_m3p6To14p8_dataset_2_v2/230825_055652/%s'%subset
-out_dir="/eos/uscms/store/user/bbbam/IMG_v2/%s"%decay
-out_dir_plots = "plots_from_pq_unbiased_m3p6To14p8_v2/%s/%s"%(decay, subset)
+local='/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/aToTauTau_Hadronic_tauDR0p4_m3p6To16_pT30To180_ctau0To3_eta0To1p4_pythia8_unbiased4ML_dataset_2/aToTauTau_Hadronic_tauDR0p4_m3p6To14p8_dataset_2_v2/230825_055652/%s'%subset
+out_dir="/eos/uscms/store/user/bbbam/IMG_v2_1/%s"%decay
+out_dir_plots = "plots_from_pq_unbiased_m3p6To14p8_v2_1/%s/%s"%(decay, subset)
 
 def upsample_array(x, b0, b1):
 
@@ -212,7 +212,7 @@ for iEvt in range(iEvtStart,iEvtEnd):
         data['ieta']  = ietas[i]
         #data['pdgId'] = pdgIds[i]
         jet_mass_.append(m0s[i])
-        data['X_jet'] = crop_jet(X_CMSII, data['iphi'], data['ieta']) # (7, 125, 125)
+        data['X_jet'] = crop_jet(X_CMSII, data['iphi'], data['ieta']) # (13, 125, 125)
 
         # Create pyarrow.Table
 
