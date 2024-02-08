@@ -14,8 +14,9 @@ import glob
 # pf = ParquetFile('/eos/uscms/store/user/bbbam/IMG_classification/merged_background/DYY.parquet')
 # pf = ParquetFile('/storage/local/data1/gpuscratch/bbbam/classification/new/GGH_TauTau_valid.parquet')
 # pf = ParquetFile('../H_AA_GG/data/IMG_aToTauTau_ML.parquet.100')
-# pf = ParquetFile('/storage/local/data1/gpuscratch/bbbam/classification/WJetsToLNu_TuneCP5_13TeV_madgraphMLM-pythia8_10.parquet')
-files = glob.glob("/eos/uscms/store/user/bhbam/IMG_v2/signal/IMG_H_AATo4Tau_Hadronic_tauDR0p4_M5_signal_v2_1.parquet")
+# pf = ParquetFile('/storage/local/data1/gpuscratch/bbbam/background/DYToTauTau_M-50_13TeV_train.parquet')
+files = glob.glob('/storage/local/data1/gpuscratch/bbbam/aToTauTau_unboosted/IMG_ATotauTau_Hadronic_M10_unboosted_v2_0.parquet')
+# files = glob.glob("/eos/uscms/store/user/bhbam/IMG_v2/signal/IMG_H_AATo4Tau_Hadronic_tauDR0p4_M5_signal_v2_1.parquet")
 print("Total files   :", len(files))
 for i in range (len(files)):
     pf = ParquetFile(files[i])

@@ -44,7 +44,7 @@ def merge_samples(dset, start, stop, idxs, decay):
     now = time.time()
     for i, idx in enumerate(idxs[start:stop]):
 
-        if i%1000 == 0:
+        if i%10000 == 0:
             print(' >> Processed event:',i)
 
         t = dset.__getitem__(idx)
@@ -55,8 +55,8 @@ def merge_samples(dset, start, stop, idxs, decay):
         data['iphi']  = float(np.squeeze(t["iphi"]))
 
         if decay =='signals':
-            data['am']    = float(np.squeeze(t["am"]))
-            data['apt']   = float(np.squeeze(t["apt"]))
+            # data['am']    = float(np.squeeze(t["am"]))
+            # data['apt']   = float(np.squeeze(t["apt"]))
             data['y']     = 1.
 
 
@@ -64,11 +64,11 @@ def merge_samples(dset, start, stop, idxs, decay):
         else:
             # data['am']    = float(np.squeeze(t["jetM"]))
             # data['apt']   = float(np.squeeze(t["jetPt"]))
-            # data['y']     = 0.
-            #only for GGH_TauTau dataset
-            data['am']    = float(np.squeeze(t["am"]))
-            data['apt']   = float(np.squeeze(t["apt"]))
             data['y']     = 0.
+            #only for GGH_TauTau dataset
+            # data['am']    = float(np.squeeze(t["am"]))
+            # data['apt']   = float(np.squeeze(t["apt"]))
+            # data['y']     = 0.
 
         pqdata = [pa.array([d]) if (np.isscalar(d) or type(d) == list) else pa.array([d.tolist()]) for d in data.values()]
         t = pa.Table.from_arrays(pqdata, list(data.keys()))
@@ -80,12 +80,12 @@ def merge_samples(dset, start, stop, idxs, decay):
     writer.close()
     print('>> E.T.: %f min'%((time.time()-now)/60.))
 
-# subfile_name = 'DYToTauTau_M-50_13TeV_valid'
-# subfile_name = 'QCD_Pt-15to7000_valid'
-# subfile_name = 'TTToHadronic_valid'
-# subfile_name = 'WJetsToLNu_valid'
-subfile_name = 'GGH_TauTau_valid'
-decay='background' # name inse IMG directory
+# subfile_name = 'DYToTauTau_M-50_13TeV_IMG'
+# subfile_name = 'QCD_Pt-15to7000_IMG'
+# subfile_name = 'TTToHadronic_IMG'
+subfile_name = 'WJetsToLNu_IMG'
+# subfile_name = 'GGH_TauTau_valid'
+decay='background_for_actual_signals' # name inse IMG directory
 # decay='signals' # name inse IMG directory
 
 # decay='Upsilon1s_ToTauTau_Hadronic_tauDR0p4_validation_no_pix_layers' # name inse IMG directory
@@ -98,13 +98,13 @@ if(cluster=='FNAL'):
     # local='/storage/local/data1/gpuscratch/bbbam/ParquetFiles_correctTrackerLayerHits_SecVtxInfoAdded/DYToTauTau_M-50_13TeV-powheg_pythia8/AODJets'
     # local='/storage/local/data1/gpuscratch/bbbam/ParquetFiles_correctTrackerLayerHits_SecVtxInfoAdded/QCD_Pt-15to7000_TuneCP5_Flat_13TeV_pythia8/AODJets'
     # local='/storage/local/data1/gpuscratch/bbbam/ParquetFiles_correctTrackerLayerHits_SecVtxInfoAdded/TTToHadronic_TuneCP5_13TeV_powheg-pythia8/AODJets'
-    # local='/storage/local/data1/gpuscratch/bbbam/ParquetFiles_correctTrackerLayerHits_SecVtxInfoAdded/WJetsToLNu_TuneCP5_13TeV_madgraphMLM-pythia8/AODJets'
-    local='/storage/local/data1/gpuscratch/bbbam/classification/valid'
+    local='/storage/local/data1/gpuscratch/bbbam/ParquetFiles_correctTrackerLayerHits_SecVtxInfoAdded/WJetsToLNu_TuneCP5_13TeV_madgraphMLM-pythia8/AODJets'
+    # local='/storage/local/data1/gpuscratch/bbbam/signal_classification'
 
     outDir='/eos/uscms/store/user/bhbam/IMG_v2/%s'%(decay)
 
 
-files_ = '/%s/GGH*.parquet*'%local
+files_ = '/%s/*.parquet*'%local
 fs = glob.glob(files_)
 
 assert len(fs) > 0
@@ -122,7 +122,8 @@ idxs = np.arange(nevts_in)
 
 # start, stop = 0, 425000
 # start, stop = 425001, 425001+85000
-start, stop = 0, nevts_in
+# start, stop = 0, nevts_in
+start, stop = 0, 722400
 if not os.path.isdir(outDir):
         os.makedirs(outDir)
 filename = '%s/%s'%(outDir,subfile_name)

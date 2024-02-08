@@ -13,21 +13,33 @@ import pickle
 
 import argparse
 parser = argparse.ArgumentParser(description='Process dataset 0-9')
-parser.add_argument('-m', '--mass',     default='',    type=str, help='mass of signal -> 3p7,4,5,6,8,10,12,14')
+parser.add_argument('-m', '--mass',     default='8',    type=str, help='mass of signal -> 3p7,4,5,6,8,10,12,14')
 parser.add_argument('-p', '--part',     default='0',     type=str, help='0 for single parquet, 1 and 2 to make two parquet')
 args = parser.parse_args()
 Mass = args.mass
 part = args.part
 
-decay ="GG_H_TauTau_samples_IMG"
-# decay ="GG_H_TauTau_Hadronic_background_valid"
+decay = "IMG_H_AATo4Tau_Hadronic_M%s_unboosted_signal_v2_%s"%(Mass,part)
 
+# if Mass == '3p7':
+#     local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/signal/gen_HToAATo4Tau_Hadronic_tauDR0p4_M3p7_ctau0To3_eta0To2p4_pythia8_2018UL_lessPerFile/HtoAATo4Tau_Hadronic_tauDR0p4_M3p7_eta0To2p4_pythia8_signal_v2/231011_150555/000*"
+# if Mass == '4':
+#     local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/signal/gen_HToAATo4Tau_Hadronic_tauDR0p4_M4_ctau0To3_eta0To2p4_pythia8_2018UL_lessPerFile/HtoAATo4Tau_Hadronic_tauDR0p4_M4_eta0To2p4_pythia8_signal_v2/231011_150649/000*"
+# if Mass == '5':
+#     local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/signal/gen_HToAATo4Tau_Hadronic_tauDR0p4_M5_ctau0To3_eta0To2p4_pythia8_2018UL_lessPerFile/HtoAATo4Tau_Hadronic_tauDR0p4_M5_eta0To2p4_pythia8_signal_v2/231013_053000/000*"
+# if Mass == '6':
+#     local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/signal/gen_HToAATo4Tau_Hadronic_tauDR0p4_M6_ctau0To3_eta0To2p4_pythia8_2018UL_lessPerFile/HtoAATo4Tau_Hadronic_tauDR0p4_M6_eta0To2p4_pythia8_signal_v2/231013_053150/000*"
+if Mass == '8':
+    local="/eos/uscms/store/user/bbbam/Ntuples_v2/signal_unboosted/Unboosted_gen_HToAATo4Tau_Hadronic_tauDR0p4_M8_ctau0To3_eta0To2p4_pythia8_2018UL_lessPerFile/HtoAATo4Tau_Hadronic_M8_eta0To2p4_pythia8_Unboosted_signal/240122_214610/0000*"
+# if Mass == '10':
+#     local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/signal/gen_HToAATo4Tau_Hadronic_tauDR0p4_M10_ctau0To3_eta0To2p4_pythia8_2018UL/HtoAATo4Tau_Hadronic_tauDR0p4_M10_eta0To2p4_pythia8_signal_v2/230830_050506/0000"
+# if Mass == '12':
+#     local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/signal/gen_HToAATo4Tau_Hadronic_tauDR0p4_M12_ctau0To3_eta0To2p4_pythia8_2018UL/HtoAATo4Tau_Hadronic_tauDR0p4_M12_eta0To2p4_pythia8_signal_v2/231013_053447/0000"
+# if Mass == '14':
+#     local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/signal/gen_HToAATo4Tau_Hadronic_tauDR0p4_M14_ctau0To3_eta0To2p4_pythia8_2018UL/HtoAATo4Tau_Hadronic_tauDR0p4_M14_eta0To2p4_pythia8_signal_v2/231013_053602/0000"
 
-local="/eos/uscms/store/group/lpcml/bbbam/Ntuples_v2/GGHToTauTau_background/231106_174037/0001"
-
-
-out_dir="/eos/uscms/store/user/bhbam/IMG_v2/background_for_actual_signals"
-
+out_dir="/eos/uscms/store/user/bbbam/IMG_v2/signal_unboosted"
+out_dir_plots = "plot_signal_M%s_image_data_pkl"%Mass
 
 def upsample_array(x, b0, b1):
 
@@ -94,11 +106,9 @@ nEvts = 0
 for filename in rhFileList:
   rhTree.Add(filename)
 
-nEvts_ =  rhTree.GetEntries()
-assert nEvts_ > 0
-# nEvts = 425000
-nEvts = 722400
-
+nEvts =  rhTree.GetEntries()
+assert nEvts > 0
+print(" >> nEvts:",nEvts)
 if not os.path.isdir(out_dir):
         os.makedirs(out_dir)
 outStr ='%s/%s.parquet'%(out_dir, decay)
@@ -113,12 +123,15 @@ elif part == '2':
 else:
     iEvtStart = 0
     iEvtEnd = nEvts
-print(" >> nEvts  all  :  ",nEvts_)
+
 assert iEvtEnd <= nEvts
 print(" >> Processing entries: [",iEvtStart,"->",iEvtEnd,")")
 
 nJets = 0
-data = {}
+data = {} # Arrays to be written to parquet should be saved to data dict
+a_mass_, a_pt_, jet_mass_, jet_pt_ = [], [], [], []
+
+
 sw = ROOT.TStopwatch()
 sw.Start()
 for iEvt in range(iEvtStart,iEvtEnd):
@@ -152,12 +165,12 @@ for iEvt in range(iEvtStart,iEvtEnd):
     #data['X_CMSII'] = np.stack([TracksAtECAL_pt, TracksAtECAL_dz, TracksAtECAL_d0, ECAL_energy, HBHE_energy, PixAtEcal_1, PixAtEcal_2, PixAtEcal_3, PixAtEcal_4], axis=0) # (9, 280, 360)
 
     # Jet attributes
-    ys     = rhTree.jet_IsTau
-    # ams    = rhTree.jet_M
-    # apts   = rhTree.a_pt
-    # dRs    = rhTree.jetadR
-    # pts    = rhTree.jet_Pt
-    # m0s    = rhTree.jet_M
+    ys     = rhTree.jetIsDiTau
+    ams    = rhTree.a_m
+    apts   = rhTree.a_pt
+    dRs    = rhTree.jetadR
+    pts    = rhTree.jetPt
+    m0s    = rhTree.jetM
     iphis  = rhTree.jetSeed_iphi
     ietas  = rhTree.jetSeed_ieta
     #pdgIds = rhTree.jetPdgIds
@@ -165,16 +178,20 @@ for iEvt in range(iEvtStart,iEvtEnd):
 
     for i in range(njets):
 
-        # data['am']    = ams[i]
-        # data['apt']   = apts[i]
-        data['y']     = 0.
-        #data['dR']    = dRs[i]
-        # data['pt']    = pts[i]
-        # data['m0']    = m0s[i]
+        data['am']    = ams[i]
+        data['apt']   = apts[i]
+        data['y']     = ys[i]
+        data['dR']    = dRs[i]
+        data['pt']    = pts[i]
+        data['m0']    = m0s[i]
         data['iphi']  = iphis[i]
         data['ieta']  = ietas[i]
         #data['pdgId'] = pdgIds[i]
-        data['X_jet'] = crop_jet(X_CMSII, data['iphi'], data['ieta']) # 
+        a_mass_.append(ams[i])
+        a_pt_.append(apts[i])
+        jet_mass_.append(m0s[i])
+        jet_pt_.append(pts[i])
+        data['X_jet'] = crop_jet(X_CMSII, data['iphi'], data['ieta']) # (13, 125, 125)
 
         # Create pyarrow.Table
 
@@ -192,6 +209,17 @@ for iEvt in range(iEvtStart,iEvtEnd):
 writer.close()
 
 
+if not os.path.isdir(out_dir_plots):
+        os.makedirs(out_dir_plots)
+
+output_dict = {}
+output_dict["a_mass"] = a_mass_
+output_dict["a_pt"] = a_pt_
+output_dict["jet_mass"] = jet_mass_
+output_dict["jet_pt"] = jet_pt_
+
+with open("%s/data_for_validation_H_AATo4Tau_hadronic_unboosted_M%s_a_jet_mass_pt_%s.pkl"%(out_dir_plots, Mass,part), "wb") as outfile:
+    pickle.dump(output_dict, outfile, protocol=2) #protocol=2 for compatibility
 
 print(" >> nJets:",nJets)
 print(" >> Real time:",sw.RealTime()/60.,"minutes")
