@@ -97,7 +97,7 @@ for filename in rhFileList:
 nEvts_ =  rhTree.GetEntries()
 assert nEvts_ > 0
 # nEvts = 425000
-nEvts = 722400
+nEvts = 722400 # this not limit nEvts = nJets so brak statement after saving nJets break down
 
 if not os.path.isdir(out_dir):
         os.makedirs(out_dir)
@@ -174,7 +174,7 @@ for iEvt in range(iEvtStart,iEvtEnd):
         data['iphi']  = iphis[i]
         data['ieta']  = ietas[i]
         #data['pdgId'] = pdgIds[i]
-        data['X_jet'] = crop_jet(X_CMSII, data['iphi'], data['ieta']) # 
+        data['X_jet'] = crop_jet(X_CMSII, data['iphi'], data['ieta']) #
 
         # Create pyarrow.Table
 
@@ -188,12 +188,14 @@ for iEvt in range(iEvtStart,iEvtEnd):
         writer.write_table(table)
 
         nJets += 1
+        if nJets >= 722400: # added to break after nJets written to pq files
 
-writer.close()
+            writer.close()
 
 
 
-print(" >> nJets:",nJets)
-print(" >> Real time:",sw.RealTime()/60.,"minutes")
-print(" >> CPU time: ",sw.CpuTime() /60.,"minutes")
-print("========================================================")
+            print(" >> nJets:",nJets)
+            print(" >> Real time:",sw.RealTime()/60.,"minutes")
+            print(" >> CPU time: ",sw.CpuTime() /60.,"minutes")
+            print("========================================================")
+            break
