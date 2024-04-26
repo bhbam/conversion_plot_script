@@ -19,8 +19,8 @@ def main():
     # root://cmsxrootd.fnal.gov//store/group/lpcml/bbbam/Samples/HIG_RunIISummer20UL18_HtoAAto4tau/220922_202510/0000/output_12.root
     # root://cmsxrootd.fnal.gov//store/group/lpcml/bbbam/Samples/HIG_RunIISummer20UL18_HtoAAto4tau/220922_202510/0000/output_13.root
     # root://cmsxrootd.fnal.gov//store/group/lpcml/bbbam/Samples/HIG_RunIISummer20UL18_HtoAAto4tau/220922_202510/0000/output_14.root
-    ggIn.Add('root://cmsxrootd.fnal.gov//store/group/lpcml/bbbam/Samples/HIG_RunIISummer20UL18_HtoAAto4tau/220922_202510/0000/output_15.root')
-    ggIn.Add('root://cmsxrootd.fnal.gov//store/group/lpcml/bbbam/Samples/HIG_RunIISummer20UL18_HtoAAto4tau/220922_202510/0000/output_16.root')
+    # ggIn.Add('root://cmsxrootd.fnal.gov//store/group/lpcml/bbbam/Samples/HIG_RunIISummer20UL18_HtoAAto4tau/220922_202510/0000/output_15.root')
+    # ggIn.Add('root://cmsxrootd.fnal.gov//store/group/lpcml/bbbam/Samples/HIG_RunIISummer20UL18_HtoAAto4tau/220922_202510/0000/output_16.root')
     # root://cmsxrootd.fnal.gov//store/group/lpcml/bbbam/Samples/HIG_RunIISummer20UL18_HtoAAto4tau/220922_202510/0000/output_2.root
     # root://cmsxrootd.fnal.gov//store/group/lpcml/bbbam/Samples/HIG_RunIISummer20UL18_HtoAAto4tau/220922_202510/0000/output_3.root
     # root://cmsxrootd.fnal.gov//store/group/lpcml/bbbam/Samples/HIG_RunIISummer20UL18_HtoAAto4tau/220922_202510/0000/output_4.root
@@ -32,14 +32,14 @@ def main():
     # ggIn.Add('/uscms/home/bbbam/nobackup/final_root_files_Eff_study/2018_ExoEff_Background_rootfile/ZToEE_NNPDF30_13TeV-powheg_M*.root')
     # ggIn.Add('HIG_RunIISummer20UL18_HtoAAto4tau/output_16.root')
     # ggIn.Add('HIG_RunIISummer20UL18_HtoAAto4tau/output_1.root')
-    # ggIn.Add('/uscms/home/bbbam/nobackup/final_root_files_Eff_study/2017_ExoEff_Signal_rootfile/ADDGravToGG_NegInt-0_*.root')
-    # ggIn.Add('/uscms/home/bbbam/nobackup/final_root_files_Eff_study/2016_ExoEff_Signal_rootfile/ADDGravToGG_NegInt-0_*.root')
+    ggIn.Add('/uscms/home/bbbam/nobackup/analysis/gen_information_H_AA_4Tau/CMSSW_10_6_20/src/Gen/GenInfo_only_H_AA_4Tau_M14_*.root')
+    # ggIn.Add('/uscms/home/bbbam/nobackup/analysis/gen_information_H_AA_4Tau/CMSSW_10_6_20/src/Gen/')
     # ggIn.Add('/eos/cms/store/user/mandrews/ML/IMGs/SingleElectronPt50_FEVTDEBUG_n125k_IMG.root')
     nEvts = ggIn.GetEntries()
     print " >> nEvts: ",nEvts
 
     # Initialize output file as empty clone
-    outFileStr = "HIG_RunIISummer20UL18_HtoAAto4tau_merged_output.root"
+    outFileStr = "/uscms/home/bbbam/nobackup/analysis/gen_information_H_AA_4Tau/CMSSW_10_6_20/src/Gen/HtoAAto4tau_merged_output_M14.root"
     # outFileStr = "/uscms/home/bbbam/nobackup/final_root_files_Eff_study/Background.root"
     # outFileStr = "/uscms/home/bbbam/nobackup/final_root_files_Eff_study/Full_datasetcd .root"
     outFile = ROOT.TFile(outFileStr, "RECREATE")
