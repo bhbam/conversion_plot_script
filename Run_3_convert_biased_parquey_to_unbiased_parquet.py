@@ -61,7 +61,7 @@ if not os.path.isdir(outDir):
         os.makedirs(outDir)
 
 print('>> Output events more than : %d [ %d, %d ]'%((stop-start), start, stop))
-outStr = f"{outDir}/{decay}_unbiased_{subset}.parquet"
+outStr = f"{outDir}/{decay}_{subset}.parquet"
 print(f">> Ouput file:  {outStr}")
 index = 0
 data = {}
