@@ -13,18 +13,20 @@ Mass = args.Mass
 
 
 local ={
-'3p7':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_run3/HToAATo4Tau_hadronic_tauDecay_M3p7_Run3_2023/RHAnalyzer_HToAATo4Tau_Hadronic_M3p7/241204_180445/0000"
-,'4':None
-,'5':None
-,'6':None
-,'8':None
-,'10':None
-,'12':None
-,'14':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_run3/HToAATo4Tau_hadronic_tauDecay_M14_Run3_2023/RHAnalyzer_HToAATo4Tau_Hadronic_M14/241204_181504/0000"
+# '3p7':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_run3/HToAATo4Tau_hadronic_tauDecay_M3p7_Run3_2023/RHAnalyzer_HToAATo4Tau_Hadronic_M3p7/241204_180445/0000"
+'3p7':"/eos/uscms/store/group/lpcml/rchudasa/MCGenerationRun3/HToAATo4Tau_hadronic_tauDecay_M3p7_Run3_2023/3p7_MLAnalyzer_ntuples_v1/241209_155112/0000"
+,'4':"/eos/uscms/store/group/lpcml/rchudasa/MCGenerationRun3/HToAATo4Tau_hadronic_tauDecay_M4_Run3_2023/4_MLAnalyzer_bigProduction/241220_115739/0000"
+,'5':"/eos/uscms"
+,'6':"/eos/uscms/store/group/lpcml/rchudasa/MCGenerationRun3/HToAATo4Tau_hadronic_tauDecay_M6_Run3_2023/6_MLAnalyzer_bigProduction/241220_115409/0000"
+,'8':"/eos/uscms"
+,'10':"/eos/uscms"
+,'12':"/eos/uscms"
+# ,'14':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_run3/HToAATo4Tau_hadronic_tauDecay_M14_Run3_2023/RHAnalyzer_HToAATo4Tau_Hadronic_M14/241204_181504/0000"
+,'14':"/eos/uscms/store/group/lpcml/rchudasa/MCGenerationRun3/HToAATo4Tau_hadronic_tauDecay_M14_Run3_2023/14_MLAnalyzer_ntuples_v1/241209_155230/0000"
 }.get(Mass, None)
 
 decay = f"IMG_HToAATo4Tau_Hadronic_signal_mass_{Mass}_GeV"
-outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG/signals/{decay}"
+outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals/{decay}"
 
 
 
@@ -50,7 +52,7 @@ print (" >> %d files found"%len(rhFileList))
 sort_nicely(rhFileList)
 
 
-files_per_run = 4
+files_per_run = 6
 
 file_idx_ = list(range( 0, len(rhFileList), files_per_run ))
 n_iter_ = len( file_idx_ )
