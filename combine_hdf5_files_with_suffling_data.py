@@ -393,12 +393,16 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
     parser.add_argument('-m', '--Mass',     default='3p7',    type=str, help='select signal mass as str')
-    parser.add_argument('-b', '--batch_size', type=int, default=32,
-                        help='input batch size for training')
+    parser.add_argument('-b', '--batch_size', type=int, default=32, help='input batch size for training')
+    parser.add_argument('-p', '--process',     default='signal',    type=str, help='select signal or background')
     args = parser.parse_args()
-
-    local = f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals_normalized/IMG_HToAATo4Tau_Hadronic_signal_mass_{args.Mass}_GeV_normalized"
-    file_name = f"IMG_HToAATo4Tau_Hadronic_signal_mass_{args.Mass}_GeV_normalized_combined.h5"
-    outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals_normalized_combined"
+    if args.process=='signal':
+        local = f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals_normalized/IMG_HToAATo4Tau_Hadronic_signal_mass_{args.Mass}_GeV_normalized"
+        file_name = f"IMG_HToAATo4Tau_Hadronic_signal_mass_{args.Mass}_GeV_normalized_combined.h5"
+        outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals_normalized_combined"
+    if args.process=='background':
+        local = f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/background_normalized/IMG_HToAATo4Tau_Hadronic_background_{args.Mass}_normalized"
+        file_name = f"IMG_HToAATo4Tau_Hadronic_background_{args.Mass}_normalized_combined.h5"
+        outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/background_normalized_combined"
 
     combine_h5_files(local, outDir, file_name, args.batch_size)

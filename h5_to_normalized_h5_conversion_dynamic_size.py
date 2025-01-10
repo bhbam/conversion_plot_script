@@ -174,18 +174,18 @@ with h5py.File(f'{outdir}/{outfile}', 'w') as proper_data:
         proper_data['iphi'][start_idx_:end_idx_] = iphi_batch
 
         proper_data['apt'][start_idx_:end_idx_] = apt_batch
-        
+
         # print("_____________________________________________________________")
 
 data.close()
-size_ = np.concatenate(size_, axis=0).T
-mean_ = np.concatenate(mean_, axis=0).T
-std_ = np.concatenate(std_, axis=0).T
-normalised_mean, normalised_std = estimate_population_parameters(size_, mean_, std_)
-
-print(f'Normalised mean: {normalised_mean}\n' )
-print(f'normalised std : {normalised_std}\n')
-print(f'number_of_selected_jets_std : {std_.shape[1]}\n')
+# size_ = np.concatenate(size_, axis=0).T
+# mean_ = np.concatenate(mean_, axis=0).T
+# std_ = np.concatenate(std_, axis=0).T
+# normalised_mean, normalised_std = estimate_population_parameters(size_, mean_, std_)
+#
+# print(f'Normalised mean: {normalised_mean}\n' )
+# print(f'normalised std : {normalised_std}\n')
+# print(f'number_of_selected_jets_std : {std_.shape[1]}\n')
 
 # stat = {
 #         "normalised_mean":normalised_mean,

@@ -6,16 +6,25 @@ from multiprocessing import Pool
 import argparse
 parser = argparse.ArgumentParser(description='Process dataset 0-9')
 parser.add_argument('-m', '--Mass',     default='3p7',    type=str, help='select signal mass as str')
+parser.add_argument('-p', '--process',     default='signal',    type=str, help='select signal or background')
 
 args = parser.parse_args()
 
 Mass = args.Mass
 
 
-local = f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals/IMG_HToAATo4Tau_Hadronic_signal_mass_{Mass}_GeV"
 
-decay = f"IMG_HToAATo4Tau_Hadronic_signal_mass_{Mass}_GeV_normalized"
-outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals_normalized/{decay}"
+
+if args.process=='signal':
+    local = f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals/IMG_HToAATo4Tau_Hadronic_signal_mass_{Mass}_GeV"
+    decay = f"IMG_HToAATo4Tau_Hadronic_signal_mass_{Mass}_GeV_normalized"
+    outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals_normalized/{decay}"
+
+if args.process=='background':
+    local = f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/background/IMG_HToAATo4Tau_Hadronic_background_{Mass}_GeV"
+    decay = f"IMG_HToAATo4Tau_Hadronic_background_{Mass}_normalized"
+    outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/background_normalized/{decay}"
+
 
 
 
