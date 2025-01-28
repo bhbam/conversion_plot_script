@@ -3,3 +3,4 @@
 plots*/
 *.log
 *.pyc
+unphysical_massreg_plots/

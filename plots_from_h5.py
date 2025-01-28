@@ -23,15 +23,17 @@ cms_colors = [
 # Create the CMS colormap
 cms_cmap = LinearSegmentedColormap.from_list('CMS', cms_colors)
 
-file =glob.glob('/storage/local/data1/gpuscratch/bbbam/IMG_massregression_sample_mass_negative_1p2To18_GeV_normalized_combined_train/*valid*')
+file =glob.glob('/eos/uscms/store/user/bhbam/Run_3_IMG_mass_reg_unphy_m0To3p6/IMG_AToTau_Hadronic_mass_reg_m0To3p6_pt30To300_normalized_combined_unbiased/*.h5')
 file_ = file[0]
 data = h5py.File(f'{file_}', 'r')
 num_images = len(data["all_jet"])
 num_images_select = num_images
-
+out_dir = 'unphysical_massreg_plots'
+if not os.path.exists(out_dir):
+    os.makedirs(out_dir)
 print("Total number----", num_images)
 
-batch_size =1600
+batch_size =640
 am = []
 apt = []
 
@@ -55,7 +57,7 @@ for start_idx in tqdm(range(0, num_images_select, batch_size)):
 am = np.concatenate(am)
 apt = np.concatenate(apt)
 # taudR = np.concatenate(taudR)
-print("Done")
+print("Reading data Done")
 
 
 mass_bins = np.arange(-1.6,18.5,.4)
@@ -67,19 +69,21 @@ plt.xlabel(r'$\mathrm{A_{mass}}$ [GeV]')
 plt.ylabel(r'$\mathrm{A_{pT}}$ [GeV]')
 plt.colorbar().set_label(label='Events/ (0.4,5) GeV')
 plt.grid(color='r', linestyle='--', linewidth=.2)
-hep.cms.label(llabel="Simulation Preliminary", rlabel="13.6 TeV", loc=0, ax=ax)
-plt.savefig("mass_pt_plot.png", dpi=300, bbox_inches='tight')
+# hep.cms.label(llabel="Simulation Preliminary", rlabel="13.6 TeV", loc=0, ax=ax)
+plt.savefig(f"{out_dir}/mass_pt_plot.png", dpi=300, bbox_inches='tight')
 plt.close()
 
 plt.hist(np.squeeze(am), bins=mass_bins)
 plt.xlabel(r'$\mathrm{A_{mass}}$ [GeV]')
-hep.cms.label(llabel="Simulation Preliminary", rlabel="13.6 TeV", loc=0, ax=ax)
-plt.savefig("mass_plot.png", dpi=300, bbox_inches='tight')
+# hep.cms.label(llabel="Simulation Preliminary", rlabel="13.6 TeV", loc=0, ax=ax)
+plt.savefig(f"{out_dir}/mass_plot.png", dpi=300, bbox_inches='tight')
 plt.close()
 
 plt.hist(np.squeeze(apt), bins=pt_bins)
 plt.xlabel(r'$\mathrm{A_{pT}}$ [GeV]')
 
-hep.cms.label(llabel="Simulation Preliminary", rlabel="13.6 TeV", loc=0, ax=ax)
-plt.savefig("pt_plot.png", dpi=300, bbox_inches='tight')
+# hep.cms.label(llabel="Simulation Preliminary", rlabel="13.6 TeV", loc=0, ax=ax)
+plt.savefig(f"{out_dir}/pt_plot.png", dpi=300, bbox_inches='tight')
 plt.close()
+
+print("Plotting Done")

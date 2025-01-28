@@ -186,13 +186,13 @@ def get_data_to_write(buffers, num_entries):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--input_data_path', default='/storage/local/data1/gpuscratch/bbbam/Run_3_img_neagative_mass',
+    parser.add_argument('--input_data_path', default='/eos/uscms/store/user/bhbam/Run_3_IMG_mass_reg_unphy_m0To3p6/IMG_AToTau_Hadronic_mass_reg_m0To3p6_pt30To300_normalized',
                         help='input data path')
-    parser.add_argument('--output_data_path', default='/storage/local/data1/gpuscratch/bbbam/IMG_massregression_sample_mass_negative_1p2To18_GeV_normalized_combined_train',
+    parser.add_argument('--output_data_path', default='/eos/uscms/store/user/bhbam/Run_3_IMG_mass_reg_unphy_m0To3p6/IMG_AToTau_Hadronic_mass_reg_m0To3p6_pt30To300_normalized_combined',
                         help='output data path')
-    parser.add_argument('--output_data_file', default='IMG_massregression_sample_mass_negative_1p2To18_GeV_normalized_combined_train.h5',
+    parser.add_argument('--output_data_file', default='IMG_massregression_sample_m0To3p6_GeV_pt30To300_normalized_combined_train.h5',
                         help='output data file')
-    parser.add_argument('--batch_size', type=int, default=3200,
+    parser.add_argument('--batch_size', type=int, default=320,
                         help='input batch size for training')
     args = parser.parse_args()
     combine_h5_files(args.input_data_path, args.output_data_path, args.output_data_file, args.batch_size)

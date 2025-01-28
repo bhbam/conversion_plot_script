@@ -25,6 +25,11 @@ if args.process=='background':
     decay = f"IMG_HToAATo4Tau_Hadronic_background_{Mass}_normalized"
     outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/background_normalized/{decay}"
 
+if args.process=='massreg':
+    local = f"/eos/uscms/store/user/bhbam/Run_3_IMG_mass_reg_unphy_m0To3p6/IMG_AToTau_Hadronic_massregssion_samples_m1p8To3p6_pt30To300"
+    decay = f"IMG_AToTau_Hadronic_mass_reg_{Mass}_pt30To300_normalized"
+    outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_mass_reg_unphy_m0To3p6/{decay}"
+
 
 
 
@@ -50,7 +55,7 @@ print (" >> %d files found"%len(rhFileList))
 sort_nicely(rhFileList)
 
 
-files_per_run = 6
+files_per_run = 16
 
 file_idx_ = list(range( 0, len(rhFileList), files_per_run ))
 n_iter_ = len( file_idx_ )

@@ -11,7 +11,7 @@ parser.add_argument('--input_file', default='/pscratch/sd/b/bbbam/IMG_aToTauTau_
                     help='input data path')
 parser.add_argument('--output_data_path', default='/pscratch/sd/b/bbbam/IMG_aToTauTau_masregression_samples_m1p2To17p2_combined_normalized',
                     help='output data path')
-parser.add_argument('--batch_size', type=int, default=32,
+parser.add_argument('--batch_size', type=int, default=320,
                     help='input batch size for conversion')
 parser.add_argument('--chunk_size', type=int, default=32,
                     help='chunk size')
