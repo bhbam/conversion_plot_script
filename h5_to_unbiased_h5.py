@@ -19,11 +19,11 @@ def process_bin(args):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input_file', default='/eos/uscms/store/user/bhbam/Run_3_IMG_mass_reg_unphy_m0To3p6/IMG_AToTau_Hadronic_mass_reg_m0To3p6_pt30To300_normalized_combined/IMG_massregression_sample_m0To3p6_GeV_pt30To300_normalized_combined_train.h5',
+    parser.add_argument('--input_file', default='/eos/uscms/store/user/bhbam/Run_3_IMG_mass_reg_unphy_m0To3p6/IMG_Tau_Hadronic_decay_mass_reg_m1p8T03p6_pt30To300_normalized_combined/IMG_massregression_sample_tau_haronic_decay_m0To3p6_GeV_pt30To300_normalized_combined_train.h5',
                         help='input data ')
-    parser.add_argument('--output_data_path', default='/eos/uscms/store/user/bhbam/Run_3_IMG_mass_reg_unphy_m0To3p6/IMG_AToTau_Hadronic_mass_reg_m0To3p6_pt30To300_normalized_combined_unbiased',
+    parser.add_argument('--output_data_path', default='/eos/uscms/store/user/bhbam/Run_3_IMG_mass_reg_unphy_m0To3p6/IMG_Tau_Hadronic_decay_mass_reg_m0To3p6_pt30To300_normalized_combined_unbiased',
                         help='output data path')
-    parser.add_argument('--output_file', default='IMG_AToTau_Hadronic_massregssion_samples_m1p8To3p6_pt30To300_unbiased_normalized_train.h5',
+    parser.add_argument('--output_file', default='IMG_Tau_Hadronic_decay_massregssion_samples_m1p8To3p6_pt30To300_unbiased_normalized_train.h5',
                         help='output file name')
     parser.add_argument('--batch_size', type=int, default=64,
                         help='input batch size for conversion')
