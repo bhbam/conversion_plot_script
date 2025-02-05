@@ -14,13 +14,15 @@ Mass = args.Mass
 
 
 local ={
-'m1p8To3p6':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_run3/GEN_SIM_AToTau_m1p8To3p6_pt30To300/RHAnalyzer_AToTau_Hadronic_m1p8To3p6_v2/250126_055706/0000"
+'m1p8To3p6':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_run3/GEN_SIM_Tau_m1p8To3p6_pt30To300/RHAnalyzer_Tau_Hadronic_decay_m1p8To3p6_v2/250131_151535/0000"
+# 'm1p8To3p6':"/storage/local/data1/gpuscratch/bbbam/RHAnalyzer_Tau_Hadronic_decay_m1p8To3p6_v2/0000"
 
 }.get(Mass, None)
 
 
-decay = f"IMG_AToTau_Hadronic_massregssion_samples_{Mass}_pt30To300"
+decay = f"IMG_Tau_Hadronic_decay_massregssion_samples_{Mass}_pt30To300"
 outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_mass_reg_unphy_m0To3p6/{decay}"
+# outDir=f"/storage/local/data1/gpuscratch/bbbam/Run_3_IMG_mass_reg_unphy_m0To3p6/{decay}"
 
 def alphanum_key(s):
     """ Turn a string into a list of string and number chunks.
@@ -38,7 +40,7 @@ def run_process(process):
 
 
 rhFileList = '%s/output*.root'%(local)
-rhFileList = glob.glob(rhFileList)
+rhFileList = sorted(glob.glob(rhFileList))
 assert len(rhFileList) > 0
 print (" >> %d files found"%len(rhFileList))
 sort_nicely(rhFileList)

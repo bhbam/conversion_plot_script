@@ -1,4 +1,5 @@
 ### in el9: source /cvmfs/sft.cern.ch/lcg/views/LCG_105_swan/x86_64-el9-gcc13-opt/setup.sh
+### also works in gpu node 2
 import h5py
 import ROOT
 import numpy as np

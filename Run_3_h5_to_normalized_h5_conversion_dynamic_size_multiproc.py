@@ -5,8 +5,8 @@ from multiprocessing import Pool
 
 import argparse
 parser = argparse.ArgumentParser(description='Process dataset 0-9')
-parser.add_argument('-m', '--Mass',     default='3p7',    type=str, help='select signal mass as str')
-parser.add_argument('-p', '--process',     default='signal',    type=str, help='select signal or background')
+parser.add_argument('-m', '--Mass',     default='m1p8T03p6',    type=str, help='select signal mass as str')
+parser.add_argument('-p', '--process',     default='massreg',    type=str, help='select signal or background')
 
 args = parser.parse_args()
 
@@ -26,9 +26,9 @@ if args.process=='background':
     outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/background_normalized/{decay}"
 
 if args.process=='massreg':
-    local = f"/eos/uscms/store/user/bhbam/Run_3_IMG_mass_reg_unphy_m0To3p6/IMG_AToTau_Hadronic_massregssion_samples_m1p8To3p6_pt30To300"
-    decay = f"IMG_AToTau_Hadronic_mass_reg_{Mass}_pt30To300_normalized"
-    outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_mass_reg_unphy_m0To3p6/{decay}"
+    local = f"/eos/uscms/store/user/bbbam/Run_3_IMG_mass_reg_m3p6T018_h5/IMG_aToTauTau_Hadronic_m3p6To18_pt30T0300_unbiased_h5"
+    decay = f"IMG_aToTauTau_Hadronic_m3p6To18_pt30T0300_unbaised_normalized_h5"
+    outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_mass_reg_m3p6T018_h5/{decay}"
 
 
 
@@ -50,20 +50,22 @@ def run_process(process):
 
 rhFileList = '%s/*.h5'%(local)
 rhFileList = glob.glob(rhFileList)
-assert len(rhFileList) > 0
+total_files = len(rhFileList)
+# total_files = 200
+assert total_files > 0
 print (" >> %d files found"%len(rhFileList))
 sort_nicely(rhFileList)
 
 
-files_per_run = 16
+files_per_run = 10
 
-file_idx_ = list(range( 0, len(rhFileList), files_per_run ))
+file_idx_ = list(range(0, total_files, files_per_run ))
 n_iter_ = len( file_idx_ )
-file_idx_.append( len(rhFileList) )
+file_idx_.append( total_files )
 print ( file_idx_ )
 
 for irun_ in range( n_iter_ ):
-    files_ = rhFileList[ file_idx_[ irun_ ] : file_idx_[irun_+1] ]
+    files_ = rhFileList[file_idx_[ irun_ ] : file_idx_[irun_+1] ]
     for idx_, file_ in enumerate(files_):
         print(' >> Input File[%d]: %s' % ( idx_, file_ ) )
 
