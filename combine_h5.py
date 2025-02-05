@@ -45,11 +45,11 @@ def copy_datasets(source, dest, initialized_datasets, batch_size):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--input_data_path', default='/eos/uscms/store/user/bhbam/Run_3_IMG_mass_reg_unphy_m0To3p6/IMG_AToTau_Hadronic_mass_reg_m0To3p6_pt30To300_normalized',
+    parser.add_argument('--input_data_path', default='/eos/uscms/store/user/bbbam/Run_3_IMG_mass_reg_m3p6T018_h5/IMG_aToTauTau_Hadronic_m3p6To18_pt30T0300_unbaised_normalized_train_h5',
                         help='input data path')
-    parser.add_argument('--output_data_path', default='/eos/uscms/store/user/bhbam/Run_3_IMG_mass_reg_unphy_m0To3p6/IMG_AToTau_Hadronic_mass_reg_m0To3p6_pt30To300_normalized_combined',
+    parser.add_argument('--output_data_path', default='/eos/uscms/store/user/bbbam/Run_3_IMG_mass_reg_m3p6T018_h5/IMG_aToTauTau_Hadronic_m3p6To18_pt30T0300_unbaised_normalized_combined_train_h5',
                         help='output data path')
-    parser.add_argument('--output_data_file', default='IMG_massregression_sample_m0To3p6_GeV_pt30To300_normalized_combined_train.h5',
+    parser.add_argument('--output_data_file', default='IMG_aToTauTau_Hadronic_m3p6To18_pt30T0300_unbiased_combined_normalized_train.h5',
                         help='output data file')
     parser.add_argument('--batch_size', type=int, default=320,
                         help='input batch size for training')
