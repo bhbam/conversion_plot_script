@@ -45,13 +45,13 @@ def copy_datasets(source, dest, initialized_datasets, batch_size):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--input_data_path', default='/eos/uscms/store/user/bbbam/Run_3_IMG_mass_reg_m3p6T018_h5/IMG_aToTauTau_Hadronic_m3p6To18_pt30T0300_unbaised_normalized_train_h5',
+    parser.add_argument('--input_data_path', default='/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals/IMG_HToAATo4Tau_Hadronic_signal_mass_3p7_GeV',
                         help='input data path')
-    parser.add_argument('--output_data_path', default='/eos/uscms/store/user/bbbam/Run_3_IMG_mass_reg_m3p6T018_h5/IMG_aToTauTau_Hadronic_m3p6To18_pt30T0300_unbaised_normalized_combined_train_h5',
+    parser.add_argument('--output_data_path', default='/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals_combined',
                         help='output data path')
-    parser.add_argument('--output_data_file', default='IMG_aToTauTau_Hadronic_m3p6To18_pt30T0300_unbiased_combined_normalized_train.h5',
+    parser.add_argument('--output_data_file', default='IMG_HToAATo4Tau_Hadronic_signal_mass_3p7_GeV.h5',
                         help='output data file')
-    parser.add_argument('--batch_size', type=int, default=320,
+    parser.add_argument('--batch_size', type=int, default=32,
                         help='input batch size for training')
     args = parser.parse_args()
     combine_h5_files(args.input_data_path, args.output_data_path, args.output_data_file, args.batch_size)
