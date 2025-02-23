@@ -45,11 +45,11 @@ def copy_datasets(source, dest, initialized_datasets, batch_size):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--input_data_path', default='/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals/IMG_HToAATo4Tau_Hadronic_signal_mass_3p7_GeV',
+    parser.add_argument('--input_data_path', default='/eos/uscms/store/user/bbbam/Run_3_IMG_mass_reg_unphy_m0To3p6/IMG_Tau_hadronic_massregssion_samples_m1p8To3p6_pt30To300_v2_valid',
                         help='input data path')
-    parser.add_argument('--output_data_path', default='/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals_combined',
+    parser.add_argument('--output_data_path', default='/eos/uscms/store/user/bbbam/Run_3_IMG_mass_reg_unphy_m0To3p6/IMG_Tau_hadronic_massregssion_samples_m0To3p6_pt30To300_v2_original_combined_valid',
                         help='output data path')
-    parser.add_argument('--output_data_file', default='IMG_HToAATo4Tau_Hadronic_signal_mass_3p7_GeV.h5',
+    parser.add_argument('--output_data_file', default='IMG_Tau_hadronic_massregssion_samples_m0To3p6_pt30To300_v2_original_combined_valid.h5',
                         help='output data file')
     parser.add_argument('--batch_size', type=int, default=32,
                         help='input batch size for training')

@@ -14,13 +14,14 @@ Mass = args.Mass
 
 
 local ={
-'m1p8To3p6':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_run3/GEN_SIM_Tau_m1p8To3p6_pt30To300/RHAnalyzer_Tau_Hadronic_decay_m1p8To3p6_v2/250131_151535/0000"
+'m1p8To3p6':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_run3/GEN_SIM_Tau_hadronic_m1p8To3p6_pt30To300_v2/RHAnalyzer_Tau_hadronic_m1p8To3p6_v3/250221_005915/0000"
+# 'm1p8To3p6':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_run3/GEN_SIM_Tau_m1p8To3p6_pt30To300/RHAnalyzer_Tau_Hadronic_decay_m1p8To3p6_v2/250131_151535/0000"
 # 'm1p8To3p6':"/storage/local/data1/gpuscratch/bbbam/RHAnalyzer_Tau_Hadronic_decay_m1p8To3p6_v2/0000"
 
 }.get(Mass, None)
 
 
-decay = f"IMG_Tau_Hadronic_decay_massregssion_samples_{Mass}_pt30To300"
+decay = f"IMG_Tau_hadronic_massregssion_samples_{Mass}_pt30To300_v2"
 outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_mass_reg_unphy_m0To3p6/{decay}"
 # outDir=f"/storage/local/data1/gpuscratch/bbbam/Run_3_IMG_mass_reg_unphy_m0To3p6/{decay}"
 
@@ -46,7 +47,7 @@ print (" >> %d files found"%len(rhFileList))
 sort_nicely(rhFileList)
 
 
-files_per_run = 16
+files_per_run = 8
 
 file_idx_ = list(range( 0, len(rhFileList), files_per_run ))
 n_iter_ = len( file_idx_ )
