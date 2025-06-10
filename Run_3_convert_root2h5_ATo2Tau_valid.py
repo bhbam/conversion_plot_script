@@ -105,6 +105,7 @@ with h5py.File(f'{outStr}', 'w') as proper_data:
             iphis  = rhTree.jetSeed_iphi
             ietas  = rhTree.jetSeed_ieta
             taudrs = rhTree.TaudR
+            nVtxs  = rhTree.nVtx
             ys  = min(len(ietas), len(iphis))
             if ys < 2: continue
             end_idx = end_idx + ys
@@ -146,6 +147,7 @@ with h5py.File(f'{outStr}', 'w') as proper_data:
                 proper_data['jet_pt'][end_idx - ys + i, :] = jet_Pt[i]
                 proper_data['jet_e'][end_idx - ys + i, :] = jet_E[i]
                 proper_data['TaudR'][end_idx - ys + i, :] = taudrs[i]
+                proper_data['nVtx'][end_idx - ys + i, :] = nVtxs[i]
 
 
 print(" >> Real time:",sw.RealTime()/60.,"minutes")
