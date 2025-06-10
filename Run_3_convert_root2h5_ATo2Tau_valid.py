@@ -74,7 +74,7 @@ print(" >> Processing entries: [",iEvtStart,"->",iEvtEnd,")")
 sw = ROOT.TStopwatch()
 sw.Start()
 with h5py.File(f'{outStr}', 'w') as proper_data:
-        dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'apt', 'a_eta', 'a_phi','jet_mass', 'jet_pt', 'jet_e', 'TaudR']
+        dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'apt', 'a_eta', 'a_phi','jet_mass', 'jet_pt', 'jet_e', 'TaudR', 'nVtx']
         datasets = {
             name: proper_data.create_dataset(
                 name,
@@ -105,7 +105,7 @@ with h5py.File(f'{outStr}', 'w') as proper_data:
             iphis  = rhTree.jetSeed_iphi
             ietas  = rhTree.jetSeed_ieta
             taudrs = rhTree.TaudR
-            nVtxs  = rhTree.nVtx
+            nVtx  = rhTree.nVtx
             ys  = min(len(ietas), len(iphis))
             if ys < 2: continue
             end_idx = end_idx + ys
@@ -147,7 +147,7 @@ with h5py.File(f'{outStr}', 'w') as proper_data:
                 proper_data['jet_pt'][end_idx - ys + i, :] = jet_Pt[i]
                 proper_data['jet_e'][end_idx - ys + i, :] = jet_E[i]
                 proper_data['TaudR'][end_idx - ys + i, :] = taudrs[i]
-                proper_data['nVtx'][end_idx - ys + i, :] = nVtxs[i]
+                proper_data['nVtx'][end_idx - ys + i, :] = nVtx
 
 
 print(" >> Real time:",sw.RealTime()/60.,"minutes")
