@@ -57,10 +57,8 @@ rhTree.Add(rhTreeStr)
 nEvts = rhTree.GetEntries()
 assert nEvts > 0
 print (" >> Input file:",rhTreeStr)
-# decay_ = rhTreeStr.split("/")[-1].replace(".root", "")
 print (" >> nEvts:",nEvts)
 outStr = '%s/%s_%s.h5'%(args.outdir, args.decay, args.idx)
-# outStr = '%s/%s_%s.h5'%(args.outdir, decay_, args.idx)
 print (" >> Output file:",outStr)
 
 ##### MAIN #####
@@ -68,7 +66,7 @@ print (" >> Output file:",outStr)
 # Event range to process
 
 iEvtStart = 0
-# iEvtEnd   = 10
+# iEvtEnd   = 40
 iEvtEnd   = nEvts
 assert iEvtEnd <= nEvts
 print(" >> Processing entries: [",iEvtStart,"->",iEvtEnd,")")
@@ -77,7 +75,7 @@ sw = ROOT.TStopwatch()
 sw.Start()
 with h5py.File(f'{outStr}', 'w') as proper_data:
         # dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'apt']
-        dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'jet_mass', 'jet_pt']
+        dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'jet_mass', 'jet_pt', 'jet_mult']
         datasets = {
             name: proper_data.create_dataset(
                 name,
@@ -104,8 +102,10 @@ with h5py.File(f'{outStr}', 'w') as proper_data:
             jet_Pt = rhTree.jetpT
             iphis  = rhTree.jetSeed_iphi
             ietas  = rhTree.jetSeed_ieta
-            ys  = min(len(ietas), len(iphis))
-            if ys != 2: continue
+            ys  = min(len(ietas), len(iphis), len(jet_mass))
+            if ys < 1: continue
+            TracksAtECAL_pt    = np.array(rhTree.ECAL_tracksPt_atECALfixIP).reshape(280,360)
+            # if TracksAtECAL_pt.max() > 1000: continue
             end_idx = end_idx + ys
 
 
@@ -113,7 +113,7 @@ with h5py.File(f'{outStr}', 'w') as proper_data:
             ECAL_energy = np.array(rhTree.ECAL_energy).reshape(280,360)
             HBHE_energy = np.array(rhTree.HBHE_energy).reshape(56,72)
             HBHE_energy = upsample_array(HBHE_energy, 5, 5) # (280, 360)
-            TracksAtECAL_pt    = np.array(rhTree.ECAL_tracksPt_atECALfixIP).reshape(280,360)
+
             TracksAtECAL_dZSig = np.array(rhTree.ECAL_tracksDzSig_atECALfixIP).reshape(280,360)
             TracksAtECAL_d0Sig = np.array(rhTree.ECAL_tracksD0Sig_atECALfixIP).reshape(280,360)
             PixAtEcal_1        = np.array(rhTree.BPIX_layer1_ECAL_atPV).reshape(280,360)
@@ -135,12 +135,13 @@ with h5py.File(f'{outStr}', 'w') as proper_data:
             for i in range(ys):
                 proper_data['all_jet'][end_idx - ys + i, :, :, :] = crop_jet(X_CMSII, iphis[i], ietas[i], jet_shape=125)
                 # proper_data['am'][end_idx - ys + i, :] = ams[i]
-                # proper_data['am'][end_idx - ys + i, :] = args.mass
+                proper_data['am'][end_idx - ys + i, :] = args.mass
                 proper_data['ieta'][end_idx - ys + i, :] = ietas[i]
                 proper_data['iphi'][end_idx - ys + i, :] = iphis[i]
                 # proper_data['apt'][end_idx - ys + i, :] = apts[i]
                 proper_data['jet_mass'][end_idx - ys + i, :] = jet_mass[i]
                 proper_data['jet_pt'][end_idx - ys + i, :] = jet_Pt[i]
+                proper_data['jet_mult'][end_idx - ys + i, :] = ys
 
 
 print(" >> Real time:",sw.RealTime()/60.,"minutes")

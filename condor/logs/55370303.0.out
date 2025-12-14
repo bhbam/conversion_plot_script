@@ -1,0 +1,29 @@
+[FERMIHTC-APPTAINER]: INFO -- ApptainerImage classAd detected
+[FERMIHTC-APPTAINER]: INFO -- Attempting to run job in /cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel9
+[FERMIHTC-APPTAINER]: INFO -- Running /cvmfs/oasis.opensciencegrid.org/mis/apptainer/current/bin/apptainer exec --pid --ipc --contain --bind /cvmfs --bind /etc/hosts --bind /etc/grid-security --home /storage/local/data1/condor/execute/dir_3086773:/srv --pwd /srv /cvmfs/singularity.opensciencegrid.org/cmssw/cms:rhel9 ./run_convert.sh
+ >> Starting job on Mon Sep  8 18:20:31 UTC 2025
+ >> Host: bbbam-55370303-0-cmswn2197.fnal.gov
+ >> PWD: /srv
+ >> Proxy being used: /srv/x509up_u57337
+subject   : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=bhbam/CN=844790/CN=Bhim Bahadur Bam/CN=631183880
+issuer    : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=bhbam/CN=844790/CN=Bhim Bahadur Bam
+identity  : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=bhbam/CN=844790/CN=Bhim Bahadur Bam
+type      : RFC compliant proxy
+strength  : 2048 bits
+path      : /srv/x509up_u57337
+timeleft  : 190:55:22
+key usage : Digital Signature, Key Encipherment
+=== VO cms extension information ===
+VO        : cms
+subject   : /DC=ch/DC=cern/OU=Organic Units/OU=Users/CN=bhbam/CN=844790/CN=Bhim Bahadur Bam
+issuer    : /DC=ch/DC=cern/OU=computers/CN=cms-auth.cern.ch
+attribute : /cms/Role=NULL/Capability=NULL
+attribute : /cms/uscms/Role=NULL/Capability=NULL
+timeleft  : 190:55:22
+uri       : voms-cms-auth.cern.ch:15000
+ >> Python path: /usr/bin/python3
+Python 3.9.21
+ >> Running test.py
+--------------ran *.py file-----------------
+--------------Run successfully-----------------
+ >> Job finished at Mon Sep  8 18:20:31 UTC 2025

@@ -1,0 +1,20 @@
+executable = run_convert.sh
+Universe   = vanilla
+GetEnv     = Fasle
+
+x509userproxy = /uscms/home/bbbam/x509up_u57337
+use_x509userproxy = true
+
+WhenToTransferOutput = ON_EXIT
+output = logs/$(ClusterId).$(ProcId).out
+error  = logs/$(ClusterId).$(ProcId).err
+log    = logs/$(ClusterId).log
+
++AccountingGroup = "group_u_CMST3.all"
+request_memory = 1GB
+request_cpus   = 1
+transfer_executable = True
+
+# Transfer your Python script with the job
+transfer_input_files = /uscms/home/bbbam/nobackup/conversion_plot_scripts/condor/test.py
+queue

@@ -11,8 +11,8 @@ from numpy.lib.stride_tricks import as_strided
 
 import argparse
 parser = argparse.ArgumentParser(description='Process some integers.')
-parser.add_argument('-i', '--infile', default='output_qqgg.root', type=str, help='Input root file.')
-parser.add_argument('-o', '--outdir', default='.', type=str, help='Output pq file dir.')
+parser.add_argument('-i', '--infile', default='/eos/uscms/store/group/lpcml/bbbam/Ntuples_run3/GEN_SIM_ATo2Tau_Mass3p7_GeV_pt30To300_GeV_valid/RHAnalyzer_ATo2Tau_mass3p7_valid/250606_001920/0000/output_29.root', type=str, help='Input root file.')
+parser.add_argument('-o', '--outdir', default='/eos/uscms/store/user/bbbam/Condor_test', type=str, help='Output pq file dir.')
 parser.add_argument('-d', '--decay', default='test', type=str, help='Decay name.')
 parser.add_argument('-n', '--idx', default=0, type=int, help='Input root file index.')
 parser.add_argument('-c', '--chunk_size', default=32, type=int, help='chunk size for h5 file')
@@ -58,6 +58,7 @@ nEvts = rhTree.GetEntries()
 assert nEvts > 0
 print (" >> Input file:",rhTreeStr)
 print (" >> nEvts:",nEvts)
+os.makedirs(f"{args.outdir}", exist_ok=True)
 outStr = '%s/%s_%s.h5'%(args.outdir, args.decay, args.idx)
 print (" >> Output file:",outStr)
 
