@@ -14,21 +14,19 @@ Mass = args.Mass
 
 
 local ={
-# '3p7':"/eos/uscms/group/lpcml/rchudasa/MCGenerationRun3/HToAATo4Tau_hadronic_tauDecay_M3p7_Run3_2023/3p7_MLAnalyzer_miniAOD_bigProductionRe/250430_020739/0001"
-'3p7':"/storage/local/data1/gpuscratch/bbbam/HToAATo4Tau_hadronic_tauDecay_M3p7_Run3_2023_root"
-,'4':"/eos/uscms/store/group/lpcml/rchudasa/MCGenerationRun3/HToAATo4Tau_hadronic_tauDecay_M4_Run3_2023/4_MLAnalyzer_bigProduction/241220_115739/0000"
-,'5':"/eos/uscms"
-,'6':"/eos/uscms/store/group/lpcml/rchudasa/MCGenerationRun3/HToAATo4Tau_hadronic_tauDecay_M6_Run3_2023/6_MLAnalyzer_bigProduction/241220_115409/0000"
-,'8':"/eos/uscms"
-,'10':"/eos/uscms"
-,'12':"/eos/uscms"
-# ,'14':"/storage/local/data1/gpuscratch/bbbam/RHAnalyzer_HToAATo4Tau_Hadronic_M14"
-,'14':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_run3/HToAATo4Tau_hadronic_tauDecay_M14_Run3_2023/RHAnalyzer_HToAATo4Tau_Hadronic_M14/241204_181504/0000"
-,'QCD':"/eos/uscms/store/group/lpcml/rchudasa/MCGenerationRun3/GEN_SIM_QCD_pt15to7000_Run3Summer23GS/QCD_MLAnalyzer_ntuples_v1/241209_155310/0000"
-,'HToTauTau':"/eos/uscms/store/group/lpcml/rchudasa/MCGenerationRun3/GluGluHToTauTau_M-125_TuneCP5_13p6TeV_powheg-pythia8/HTauTau_MLAnalyzer_ntuples_v1/241209_165028/0000"
-,'TTbar':"/eos/uscms/store/group/lpcml/rchudasa/MCGenerationRun3/TT_TuneCP5_13p6TeV_powheg-pythia8/TTbar_MLAnalyzer_ntuples_v1/241209_164952/0000"
-,'WJets':"/eos/uscms/store/group/lpcml/rchudasa/MCGenerationRun3/WtoLNu-2Jets_TuneCP5_13p6TeV_amcatnloFXFX-pythia8/WJets_MLAnalyzer_ntuples_v2/241213_082058/0000"
-,'ZToTauTau':"/eos/uscms/store/group/lpcml/rchudasa/MCGenerationRun3/DYto2L_M-50_TuneCP5_13p6TeV_pythia8/DYTo2L_MLAnalyzer_ntuples_v2/241213_082127/0000"
+'3p7':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_Signal_Background_Feb24_2026/HToAATo4Tau_hadronic_tauDecay_M3p7_Run3_2023/MLAnalyzer_ntuples_using_miniAOD_3p7_GeV/260225_052605/0000"
+,'4':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_Signal_Background_Feb24_2026/HToAATo4Tau_hadronic_tauDecay_M4_Run3_2023/MLAnalyzer_ntuples_using_miniAOD_4_GeV/260225_055101/0000"
+,'5':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_Signal_Background_Feb24_2026/HToAATo4Tau_hadronic_tauDecay_M5_Run3_2023/MLAnalyzer_ntuples_using_miniAOD_5_GeV/260225_131350/0000"
+,'6':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_Signal_Background_Feb24_2026/HToAATo4Tau_hadronic_tauDecay_M6_Run3_2023/MLAnalyzer_ntuples_using_miniAOD_6_GeV/260225_131414/0000"
+,'8':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_Signal_Background_Feb24_2026/HToAATo4Tau_hadronic_tauDecay_M8_Run3_2023/MLAnalyzer_ntuples_using_miniAOD_8_GeV/260225_131435/0000"
+,'10':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_Signal_Background_Feb24_2026/HToAATo4Tau_hadronic_tauDecay_M10_Run3_2023/MLAnalyzer_ntuples_using_miniAOD_10_GeV/260225_131506/0000"
+,'12':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_Signal_Background_Feb24_2026/HToAATo4Tau_hadronic_tauDecay_M12_Run3_2023/MLAnalyzer_ntuples_using_miniAOD_12_GeV/260225_131530/0000"
+,'14':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_Signal_Background_Feb24_2026/HToAATo4Tau_hadronic_tauDecay_M14_Run3_2023/MLAnalyzer_ntuples_using_miniAOD_14_GeV/260225_131603/0000"
+,'QCD':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_Signal_Background_Feb24_2026/QCD_PT-15to7000_TuneCP5_13p6TeV_pythia8/MLAnalyzer_ntuples_using_miniAOD_QCD/260226_160954/0000"
+,'HTo2Tau':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_Signal_Background_Feb24_2026/GluGluHToTauTau_M-125_TuneCP5_13p6TeV_powheg-pythia8/MLAnalyzer_ntuples_using_miniAOD_HTo2Tau/260226_164125/0000"
+,'TTbar':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_Signal_Background_Feb24_2026/TT_TuneCP5_13p6TeV_powheg-pythia8/MLAnalyzer_ntuples_using_miniAOD_TTbar/260226_160423/0000"
+,'Wjets':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_Signal_Background_Feb24_2026/WtoLNu_2Jets_TuneCP5_13p6TeV_amcatnloFXFX_pythia8_v1/MLAnalyzer_ntuples_using_miniAOD_Wjets/260226_161832/0000"
+,'DYto2L':"/eos/uscms/store/group/lpcml/bbbam/Ntuples_Signal_Background_Feb24_2026/DYto2L_M-50_TuneCP5_13p6TeV_pythia8/MLAnalyzer_ntuples_using_miniAOD_DTTo2L/260226_170136/0000"
 }.get(Mass, None)
 
 # local = "/eos/uscms/store/user/bbbam/signal_background_rootfile_9999_ntuples"
@@ -36,15 +34,17 @@ local ={
 mass_to_write=0
 
 if args.process == 'signal':
-    decay = f"IMG_HToAATo4Tau_Hadronic_signal_mass_{Mass}_GeV_with_jet_multi_h5_test"
-    outDir=f"/eos/uscms/store/user/bbbam/signals_jet_multi/{decay}"
+    label = 1
+    decay = f"IMG_signal_mass_{Mass}_GeV"
+    outDir=f"/eos/uscms/store/group/lpcml/bbbam/signals_h5_Feb_2026/{decay}"
     # outDir=f"/storage/local/data1/gpuscratch/bbbam/{decay}"
     mass_to_write = {'3p7':3.7, '4':4, '5':5, '6':6, '8':8, '10':10, '12':12, '14':14}.get(Mass, None)
 
 if args.process == 'background':
-    decay = f"IMG_HToAATo4Tau_Hadronic_background_{Mass}"
-    outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/background/{decay}"
-
+    label = 0
+    decay = f"IMG_background_{Mass}"
+    outDir=f"/eos/uscms/store/group/lpcml/bbbam/backgrounds_h5_Feb_2026/{decay}"
+    mass_to_write = 0
 
 # outDir=f"/eos/uscms/store/user/bbbam/signal_background_rootfile_9999_to_h5"
 
@@ -81,15 +81,15 @@ for irun_ in range( n_iter_ ):
     files_ = rhFileList[ file_idx_[ irun_ ] : file_idx_[irun_+1] ]
     for idx_, file_ in enumerate(files_):
         print(' >> Input File[%d]: %s' % ( idx_, file_ ) )
-    if file_idx_[irun_+1] > 4*3:
-        exit()
+    # if file_idx_[irun_+1] > files_per_run*2:
+    #     exit()
     # Output path
     if not os.path.isdir(outDir):
         os.makedirs(outDir)
     print(' >> Output directory: %s'%outDir)
 
     proc_file = 'Run_3_convert_root2h5_signal_jet.py'
-    processes = ['%s -i %s -m %s -o %s -d %s -n %d'%(proc_file, rhFile, mass_to_write, outDir, decay, ( irun_*files_per_run + i + 1 )) for i,rhFile in enumerate( files_ )]
+    processes = ['%s -i %s -m %s -y %d -o %s -d %s -n %d'%(proc_file, rhFile, mass_to_write, label, outDir, decay, ( irun_*files_per_run + i + 1 )) for i,rhFile in enumerate( files_ )]
     print(' >> Process[0]: %s'%processes[0])
 
     pool = Pool(processes=len(processes))

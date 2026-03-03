@@ -212,13 +212,16 @@ import argparse
 logging.basicConfig(level=logging.INFO)
 
 def combine_h5_files(master_folder, out_dir, dest_file, batch_size):
-    source_files = np.sort(glob.glob(f'{master_folder}/*.h5'))  # Ensure to match only .h5 files
+    source_files = glob.glob(f'{master_folder}/*.h5')  # Ensure to match only .h5 files
+    np.random.shuffle(source_files)
+    print("Total files found: ", len(source_files))
     os.makedirs(out_dir, exist_ok=True)
 
     # Collect file lengths and initialize per-file data
     files_data = []
 
-    dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'apt']
+    # dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'apt']
+    dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'y', 'jet_mass', 'jet_pt']
 
     total_length = 0
 
@@ -397,12 +400,18 @@ if __name__ == "__main__":
     parser.add_argument('-p', '--process',     default='signal',    type=str, help='select signal or background')
     args = parser.parse_args()
     if args.process=='signal':
-        local = f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals_normalized/IMG_HToAATo4Tau_Hadronic_signal_mass_{args.Mass}_GeV_normalized"
-        file_name = f"IMG_HToAATo4Tau_Hadronic_signal_mass_{args.Mass}_GeV_normalized_combined.h5"
-        outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals_normalized_combined"
+        # local = f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals_normalized/IMG_HToAATo4Tau_Hadronic_signal_mass_{args.Mass}_GeV_normalized"
+        # file_name = f"IMG_HToAATo4Tau_Hadronic_signal_mass_{args.Mass}_GeV_normalized_combined.h5"
+        # outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals_normalized_combined"
+        local = f"/eos/uscms/store/group/lpcml/bbbam/signals_background_h5_combined_Feb_2026"
+        file_name = f"IMG_signal_background_combined.h5"
+        outDir=f"/eos/uscms/store/group/lpcml/bbbam/signals_background_h5_Feb_2026_train"
     if args.process=='background':
-        local = f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/background_normalized/IMG_HToAATo4Tau_Hadronic_background_{args.Mass}_normalized"
-        file_name = f"IMG_HToAATo4Tau_Hadronic_background_{args.Mass}_normalized_combined.h5"
-        outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/background_normalized_combined"
+        # local = f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/background_normalized/IMG_HToAATo4Tau_Hadronic_background_{args.Mass}_normalized"
+        # file_name = f"IMG_HToAATo4Tau_Hadronic_background_{args.Mass}_normalized_combined.h5"
+        # outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/background_normalized_combined"
+        local = f"/eos/uscms/store/group/lpcml/bbbam/backgrounds_h5_Feb_2026"
+        file_name = f"IMG_background_combined.h5"
+        outDir=f"/eos/uscms/store/group/lpcml/bbbam/signals_background_h5_Feb_2026_combined"
 
     combine_h5_files(local, outDir, file_name, args.batch_size)

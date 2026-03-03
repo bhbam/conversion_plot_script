@@ -17,6 +17,7 @@ parser.add_argument('-d', '--decay', default='test', type=str, help='Decay name.
 parser.add_argument('-n', '--idx', default=0, type=int, help='Input root file index.')
 parser.add_argument('-c', '--chunk_size', default=32, type=int, help='chunk size for h5 file')
 parser.add_argument('-m', '--mass', default=0, type=float, help='signal mass')
+parser.add_argument('-y', '--label', default=1, type=float, help='1=Signal, 0=Background')
 args = parser.parse_args()
 chunk_size = args.chunk_size
 
@@ -77,7 +78,7 @@ sw = ROOT.TStopwatch()
 sw.Start()
 with h5py.File(f'{outStr}', 'w') as proper_data:
         # dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'apt']
-        dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'jet_mass', 'jet_pt']
+        dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'y', 'jet_mass', 'jet_pt']
         datasets = {
             name: proper_data.create_dataset(
                 name,
@@ -101,7 +102,7 @@ with h5py.File(f'{outStr}', 'w') as proper_data:
             # ams    = rhTree.A_mass
             # apts   = rhTree.A_pT
             jet_mass = rhTree.jetM
-            jet_Pt = rhTree.jetpT
+            jet_Pt = rhTree.jetPt
             iphis  = rhTree.jetSeed_iphi
             ietas  = rhTree.jetSeed_ieta
             ys  = min(len(ietas), len(iphis))
@@ -134,10 +135,12 @@ with h5py.File(f'{outStr}', 'w') as proper_data:
 
             for i in range(ys):
                 proper_data['all_jet'][end_idx - ys + i, :, :, :] = crop_jet(X_CMSII, iphis[i], ietas[i], jet_shape=125)
-                # proper_data['am'][end_idx - ys + i, :] = ams[i]
-                # proper_data['am'][end_idx - ys + i, :] = args.mass
+                proper_data['am'][end_idx - ys + i, :] = args.mass
                 proper_data['ieta'][end_idx - ys + i, :] = ietas[i]
                 proper_data['iphi'][end_idx - ys + i, :] = iphis[i]
+                proper_data['y'][end_idx - ys + i, :] = args.label
+                # proper_data['am'][end_idx - ys + i, :] = ams[i]
+
                 # proper_data['apt'][end_idx - ys + i, :] = apts[i]
                 proper_data['jet_mass'][end_idx - ys + i, :] = jet_mass[i]
                 proper_data['jet_pt'][end_idx - ys + i, :] = jet_Pt[i]
