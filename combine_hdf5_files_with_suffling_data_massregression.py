@@ -15,7 +15,7 @@ def combine_h5_files(master_folder, out_dir, dest_file, batch_size):
     # Collect file lengths and initialize per-file data
     files_data = []
 
-    dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'apt']
+    dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'apt', 'jet_mass', 'jet_pt']
 
 
     total_length = 0
@@ -50,8 +50,8 @@ def combine_h5_files(master_folder, out_dir, dest_file, batch_size):
         for name in dataset_names:
             # Determine shape and chunk size based on the dataset name
             if 'all_jet' in name:
-                data_shape = (total_length, 13, 125, 125)
-                chunk_shape = (32, 13, 125, 125)
+                data_shape = (total_length, 5, 125, 125)
+                chunk_shape = (32, 5, 125, 125)
             else:
                 data_shape = (total_length, 1)
                 chunk_shape = (32, 1)

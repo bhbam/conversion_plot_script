@@ -8,7 +8,7 @@ import argparse
 logging.basicConfig(level=logging.INFO)
 
 def combine_h5_files(master_folder, out_dir, dest_file, batch_size):
-    source_files = np.sort(glob.glob(f'{master_folder}/*.h5'))  # Ensure to match only .h5 files
+    source_files = np.sort(glob.glob(f'{master_folder}/*.h5'))# Ensure to match only .h5 files
     os.makedirs(out_dir, exist_ok=True)
 
     with h5py.File(f'{out_dir}/{dest_file}', 'w') as h5_dest:

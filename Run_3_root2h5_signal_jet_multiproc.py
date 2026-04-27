@@ -35,15 +35,15 @@ mass_to_write=0
 
 if args.process == 'signal':
     label = 1
-    decay = f"IMG_signal_mass_{Mass}_GeV"
-    outDir=f"/eos/uscms/store/group/lpcml/bbbam/signals_h5_Feb_2026/{decay}"
+    decay = f"IMG_signal_mass_{Mass}_GeV_AOD"
+    outDir=f"/eos/uscms/store/group/lpcml/bbbam/signals_h5_from_AOD_April_2026/{decay}"
     # outDir=f"/storage/local/data1/gpuscratch/bbbam/{decay}"
     mass_to_write = {'3p7':3.7, '4':4, '5':5, '6':6, '8':8, '10':10, '12':12, '14':14}.get(Mass, None)
 
 if args.process == 'background':
     label = 0
-    decay = f"IMG_background_{Mass}"
-    outDir=f"/eos/uscms/store/group/lpcml/bbbam/backgrounds_h5_Feb_2026/{decay}"
+    decay = f"IMG_background_{Mass}_AOD"
+    outDir=f"/eos/uscms/store/group/lpcml/bbbam/backgrounds_h5_from_AOD_April_2026/{decay}"
     mass_to_write = 0
 
 # outDir=f"/eos/uscms/store/user/bbbam/signal_background_rootfile_9999_to_h5"
@@ -64,13 +64,12 @@ def run_process(process):
 
 
 rhFileList = '%s/*.root'%(local)
-rhFileList = glob.glob(rhFileList)
+rhFileList = glob.glob(rhFileList)[:100]
 assert len(rhFileList) > 0
 print (" >> %d files found"%len(rhFileList))
 sort_nicely(rhFileList)
 
-
-files_per_run = 4
+files_per_run = 10
 
 file_idx_ = list(range( 0, len(rhFileList), files_per_run ))
 n_iter_ = len( file_idx_ )
@@ -88,7 +87,8 @@ for irun_ in range( n_iter_ ):
         os.makedirs(outDir)
     print(' >> Output directory: %s'%outDir)
 
-    proc_file = 'Run_3_convert_root2h5_signal_jet.py'
+    # proc_file = 'Run_3_convert_root2h5_signal_jet.py'
+    proc_file = 'Run_3_convert_root2h5_signal_background_miniAOD_AOD.py'
     processes = ['%s -i %s -m %s -y %d -o %s -d %s -n %d'%(proc_file, rhFile, mass_to_write, label, outDir, decay, ( irun_*files_per_run + i + 1 )) for i,rhFile in enumerate( files_ )]
     print(' >> Process[0]: %s'%processes[0])
 

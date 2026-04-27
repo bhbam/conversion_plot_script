@@ -19,26 +19,26 @@ def process_bin(args):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--input_file', default='/eos/uscms/store/user/bhbam/Run_3_IMG_mass_reg_unphy_m0To3p6/IMG_Tau_Hadronic_decay_mass_reg_m1p8T03p6_pt30To300_normalized_combined/IMG_massregression_sample_tau_haronic_decay_m0To3p6_GeV_pt30To300_normalized_combined_train.h5',
+    parser.add_argument('--input_data_file', default='/eos/uscms/store/group/lpcml/bbbam/Run_3_IMG_ATo2Tau_m0To18_from_miniAOD_combined_April_2026/Run_3_IMG_ATo2Tau_m0To18_from_miniAOD_combined_April_2026_valid.h5',
                         help='input data ')
-    parser.add_argument('--output_data_path', default='/eos/uscms/store/user/bhbam/Run_3_IMG_mass_reg_unphy_m0To3p6/IMG_Tau_Hadronic_decay_mass_reg_m0To3p6_pt30To300_normalized_combined_unbiased',
+    parser.add_argument('--output_data_path', default='/eos/uscms/store/group/lpcml/bbbam/Run_3_IMG_ATo2Tau_m0To18_from_miniAOD_combined_unbiased_April_2026',
                         help='output data path')
-    parser.add_argument('--output_file', default='IMG_Tau_Hadronic_decay_massregssion_samples_m1p8To3p6_pt30To300_unbiased_normalized_train.h5',
+    parser.add_argument('--output_data_file', default='Run_3_IMG_ATo2Tau_m0To18_from_miniAOD_combined_unbiased_April_2026_valid.h5',
                         help='output file name')
     parser.add_argument('--batch_size', type=int, default=64,
                         help='input batch size for conversion')
     parser.add_argument('--chunk_size', type=int, default=32,
                         help='chunk size')
-    parser.add_argument('--bin_count', type=int, default=1800,
+    parser.add_argument('--bin_count', type=int, default=200,
                         help='number entry in each bin needed')
     args = parser.parse_args()
 
     # Define mass and pt bin edges
-    mass_bins = np.arange(0, 3.7, 0.4)
+    mass_bins = np.arange(0, 18.1, 0.4)
     pt_bins = np.arange(30, 301, 5)
 
     # Open the input file
-    with h5py.File(args.input_file, "r") as data:
+    with h5py.File(args.input_data_file, "r") as data:
         # Load metadata
         mass = data["am"][:, 0]
         pt = data["apt"][:, 0]
@@ -61,15 +61,15 @@ def main():
             os.makedirs(args.output_data_path)
 
         # Create output file and datasets
-        with h5py.File(f'{args.output_data_path}/{args.output_file}', 'w') as output_data:
-            dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'apt']
+        with h5py.File(f'{args.output_data_path}/{args.output_data_file}', 'w') as output_data:
+            dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'apt', 'jet_mass', 'jet_pt']
             datasets = {
                 name: output_data.create_dataset(
                     name,
-                    shape=(len(selected_indices), 13, 125, 125) if 'all_jet' in name else (len(selected_indices), 1),
+                    shape=(len(selected_indices), 5, 125, 125) if 'all_jet' in name else (len(selected_indices), 1),
                     dtype='float32',
                     compression='lzf',
-                    chunks=(args.chunk_size, 13, 125, 125) if 'all_jet' in name else (args.chunk_size, 1),
+                    chunks=(args.chunk_size, 5, 125, 125) if 'all_jet' in name else (args.chunk_size, 1),
                 ) for name in dataset_names
             }
 
@@ -83,8 +83,10 @@ def main():
                 datasets["ieta"][start:end] = data["ieta"][chunk_indices]
                 datasets["iphi"][start:end] = data["iphi"][chunk_indices]
                 datasets["all_jet"][start:end] = data["all_jet"][chunk_indices]
+                datasets["jet_mass"][start:end] = data["jet_mass"][chunk_indices]
+                datasets["jet_pt"][start:end] = data["jet_pt"][chunk_indices]
 
-    print(f"Flat distribution created and saved to {args.output_data_path}/{args.output_file}")
+    print(f"Flat distribution created and saved to {args.output_data_path}/{args.output_data_file}")
 
 if __name__ == "__main__":
     main()
