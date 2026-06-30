@@ -102,7 +102,7 @@ with h5py.File(f'{outStr}', 'w') as proper_data:
             # ams    = rhTree.A_mass
             # apts   = rhTree.A_pT
             jet_mass = rhTree.jetM
-            jet_Pt = rhTree.jetPt
+            jet_Pt = rhTree.jetpT
             iphis  = rhTree.jetSeed_iphi
             ietas  = rhTree.jetSeed_ieta
             ys  = min(len(ietas), len(iphis))

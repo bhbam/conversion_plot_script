@@ -17,14 +17,14 @@ echo "Finished 6 at $(date)"
 python Run_3_root2h5_signal_jet_multiproc.py -m 8 -p signal
 echo "Finished 8 at $(date)"
 
-python Run_3_root2h5_signal_jet_multiproc.py -m 10 -p signal
-echo "Finished 10 at $(date)"
-
-python Run_3_root2h5_signal_jet_multiproc.py -m 12 -p signal
-echo "Finished 12 at $(date)"
-
-python Run_3_root2h5_signal_jet_multiproc.py -m 14 -p signal
-echo "Finished 14 at $(date)"
+# python Run_3_root2h5_signal_jet_multiproc.py -m 10 -p signal
+# echo "Finished 10 at $(date)"
+#
+# python Run_3_root2h5_signal_jet_multiproc.py -m 12 -p signal
+# echo "Finished 12 at $(date)"
+#
+# python Run_3_root2h5_signal_jet_multiproc.py -m 14 -p signal
+# echo "Finished 14 at $(date)"
 
 python Run_3_root2h5_signal_jet_multiproc.py -m QCD -p background
 echo "Finished QCD at $(date)"

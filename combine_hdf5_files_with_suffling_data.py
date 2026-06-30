@@ -255,8 +255,8 @@ def combine_h5_files(master_folder, out_dir, dest_file, batch_size):
         for name in dataset_names:
             # Determine shape and chunk size based on the dataset name
             if 'all_jet' in name:
-                data_shape = (total_length, 13, 125, 125)
-                chunk_shape = (32, 13, 125, 125)
+                data_shape = (total_length, 5, 125, 125)
+                chunk_shape = (32, 5, 125, 125)
             else:
                 data_shape = (total_length, 1)
                 chunk_shape = (32, 1)
@@ -403,9 +403,9 @@ if __name__ == "__main__":
         # local = f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals_normalized/IMG_HToAATo4Tau_Hadronic_signal_mass_{args.Mass}_GeV_normalized"
         # file_name = f"IMG_HToAATo4Tau_Hadronic_signal_mass_{args.Mass}_GeV_normalized_combined.h5"
         # outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/signals_normalized_combined"
-        local = f"/eos/uscms/store/group/lpcml/bbbam/signals_background_h5_combined_Feb_2026"
-        file_name = f"IMG_signal_background_combined.h5"
-        outDir=f"/eos/uscms/store/group/lpcml/bbbam/signals_background_h5_Feb_2026_train"
+        local = f"/eos/uscms/store/group/lpcml/bbbam/signals_background_h5_from_miniAOD_combined_seperately_train_July_2026"
+        file_name = f"IMG_signal_background_combined_train.h5"
+        outDir=f"/eos/uscms/store/group/lpcml/bbbam/signals_background_h5_combined_miniAOD_July_2026"
     if args.process=='background':
         # local = f"/eos/uscms/store/user/bbbam/Run_3_IMG_from_Ruchi/background_normalized/IMG_HToAATo4Tau_Hadronic_background_{args.Mass}_normalized"
         # file_name = f"IMG_HToAATo4Tau_Hadronic_background_{args.Mass}_normalized_combined.h5"

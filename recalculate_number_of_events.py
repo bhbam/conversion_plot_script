@@ -1,7 +1,7 @@
 import pickle
 import numpy as np
 # Load file
-with open("signal_background_event_counts_2.pkl", "rb") as f:
+with open("signal_background_event_counts_Juulu_2026.pkl", "rb") as f:
     data = pickle.load(f)
 
 signal_total = 0
@@ -52,5 +52,6 @@ final_events = 130000
 events_perfile = np.array(Total_events) / np.array(Total_files)
 final_files = final_events / events_perfile
 print("final number of files need to process ", final_files)
-validation_files = np.array(Total_files) - final_files
+final_valid_events = 8000
+validation_files = final_valid_events / events_perfile
 print("Validation files :", validation_files)
