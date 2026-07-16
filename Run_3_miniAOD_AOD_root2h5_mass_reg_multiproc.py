@@ -14,16 +14,15 @@ unphy = args.unphysical_samples
 
 
 local ={
-'m3p6To18':'/eos/uscms/store/group/lpcml/rchudasa/MLAnalyzer_ntuples/ATauTau_physicalMass'
-,'m0To3p6':'/eos/uscms/store/group/lpcml/bbbam/MLAnalyzer_massregression_ntuples_miniAOD/GEN_SIM_ATo2Tau_m1p2To3p6_pt30To300_v4/ATauTau_unphy_MLAnalyzer_TauMassReg_April_2026/260410_040705/000*'
-
+'m3p6To18':'/eos/uscms/store/group/lpcml/bbbam/Ntuples_massregression_miniAOD_Jul_10_2026/GEN_SIM_ATo2Tau_m3p6To18_pt30To300_v2/ATauTau_massregression_miniAOD_Jul_10_2026/260710_161620/000*'
+,'m0To3p6':'/eos/uscms/store/group/lpcml/bbbam/Ntuples_massregression_miniAOD_Jul_10_2026/GEN_SIM_ATo2Tau_m1p2To3p6_pt30To300_v4/ATauTau_unphy_massregression_miniAOD_Jul_10_2026/260710_161704/000*'
 }.get(Mass, None)
 
 
 decay = f"IMG_ATo2Tau_{Mass}_pt30To300"
 # outDir=f"/eos/uscms/store/user/bbbam/Run_3_IMG_ATo2Tau_from_miniAOD/{decay}"
-# outDir=f"/eos/uscms/store/group/lpcml/bbbam/Run_3_IMG_ATo2Tau_from_miniAOD/{decay}"
-outDir=f"/eos/uscms/store/group/lpcml/bbbam/Run_3_IMG_ATo2Tau_from_AOD_April_2026/{decay}"
+outDir=f"/eos/uscms/store/group/lpcml/bbbam/Run_3_H5_ATo2Tau_from_miniAOD_Jul_10_2026/{decay}"
+# outDir=f"/eos/uscms/store/group/lpcml/bbbam/Run_3_IMG_ATo2Tau_from_AOD_April_2026/{decay}"
 # outDir=f"/uscms/home/bbbam/nobackup/analysis_run3/analyzer_from_Ruchi/mass_regression_miniAOD/CMSSW_13_0_14/src/MLAnalyzerRun3/{decay}"
 
 def alphanum_key(s):
@@ -65,8 +64,8 @@ for irun_ in range( n_iter_ ):
         os.makedirs(outDir)
     print(' >> Output directory: %s'%outDir)
 
-    # proc_file = 'Run_3_convert_miniAOD_root2h5_mass_reg.py'
-    proc_file = 'Run_3_convert_AOD_root2h5_mass_reg.py'
+    proc_file = 'Run_3_convert_miniAOD_root2h5_mass_reg.py'
+    # proc_file = 'Run_3_convert_AOD_root2h5_mass_reg.py'
     processes = ['%s -i %s -u %s -o %s -d %s -n %d'%(proc_file, rhFile, unphy, outDir, decay, ( irun_*files_per_run + i + 1 )) for i,rhFile in enumerate( files_ )]
     print(' >> Process[0]: %s'%processes[0])
 

@@ -75,7 +75,7 @@ print (" >> Output file:",outStr)
 # Event range to process
 
 iEvtStart = 0
-# iEvtEnd   = 40
+# iEvtEnd   = 2
 iEvtEnd   = nEvts
 assert iEvtEnd <= nEvts
 print(" >> Processing entries: [",iEvtStart,"->",iEvtEnd,")")
@@ -83,7 +83,7 @@ print(" >> Processing entries: [",iEvtStart,"->",iEvtEnd,")")
 sw = ROOT.TStopwatch()
 sw.Start()
 with h5py.File(f'{outStr}', 'w') as proper_data:
-        dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'apt', 'jet_mass', 'jet_pt']
+        dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'apt', 'jet_mass', 'jet_pt', 'jet_idx']
         datasets = {
             name: proper_data.create_dataset(
                 name,
@@ -113,6 +113,12 @@ with h5py.File(f'{outStr}', 'w') as proper_data:
             ys  = min(len(ams),len(iphis),len(ietas))
             end_idx = end_idx + ys
 
+            # Rank jets in this event by jet_pt, descending: 1 = leading, 2 = sub-leading, ...
+            jetpts_evt = np.array([jetpts[i] for i in range(ys)])
+            order = np.argsort(-jetpts_evt)         # indices sorted by pt, highest first
+            jet_idx_arr = np.empty(ys, dtype=np.float32)
+            for rank, idx in enumerate(order):
+                jet_idx_arr[idx] = rank + 1       # leading jet -> 1, sub-leading -> 2, ...
 
 
             ECAL_energy = np.array(rhTree.ECAL_energy_miniAOD).reshape(280,360)
@@ -140,6 +146,7 @@ with h5py.File(f'{outStr}', 'w') as proper_data:
                 proper_data['jet_pt'][end_idx - ys + i, :] = jetpts[i]
                 proper_data['ieta'][end_idx - ys + i, :] = ietas[i]
                 proper_data['iphi'][end_idx - ys + i, :] = iphis[i]
+                proper_data['jet_idx'][end_idx - ys + i, :] = jet_idx_arr[i]
 
 
 
