@@ -34,7 +34,7 @@ def main():
     args = parser.parse_args()
 
     # Define mass and pt bin edges
-    mass_bins = np.arange(0, 18.1, 0.4)
+    mass_bins = np.arange(0, 3.6, 0.4)
     pt_bins = np.arange(30, 301, 5)
 
     # Open the input file
@@ -62,7 +62,7 @@ def main():
 
         # Create output file and datasets
         with h5py.File(f'{args.output_data_path}/{args.output_data_file}', 'w') as output_data:
-            dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'apt', 'jet_mass', 'jet_pt']
+            dataset_names = ['all_jet', 'am', 'ieta', 'iphi', 'apt', 'jet_mass', 'jet_pt', 'jet_idx']
             datasets = {
                 name: output_data.create_dataset(
                     name,
@@ -85,6 +85,7 @@ def main():
                 datasets["all_jet"][start:end] = data["all_jet"][chunk_indices]
                 datasets["jet_mass"][start:end] = data["jet_mass"][chunk_indices]
                 datasets["jet_pt"][start:end] = data["jet_pt"][chunk_indices]
+                datasets["jet_idx"][start:end] = data["jet_idx"][chunk_indices]
 
     print(f"Flat distribution created and saved to {args.output_data_path}/{args.output_data_file}")
 
